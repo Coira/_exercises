@@ -66,7 +66,8 @@ public class Stack<Item> implements Iterable<Item>
     {
 
         Stack<String> s = new Stack<String>();
-
+        
+        
         while (!StdIn.isEmpty()) {
             String item = StdIn.readString();
             if (!item.equals("-"))
@@ -75,7 +76,7 @@ public class Stack<Item> implements Iterable<Item>
         }
 
         StdOut.println("(" + s.size() + " left on stack)");
-
+        
     }
 }
 
