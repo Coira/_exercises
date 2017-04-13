@@ -1,6 +1,6 @@
 import java.util.Iterator;
 
-public class CircularQueue<Item> { //implements Iterable<Item> {
+public class CircularQueue<Item> implements Iterable<Item> {
     private class Node {
         Node next;
         Item item;
