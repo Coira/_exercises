@@ -1,0 +1,112 @@
+Exercise 2.1.1
+
+		0  1  2  3  4  5  6  7  8  9 10 11
+		e  a  s  y  q  u  e  s  t  i  o  n
+0 1		A  e  s  y  q  u  e  s  t  i  o  n
+1 1		A  E  s  y  q  u  e  s  t  i  o  n
+2 6		A  E  E  y  q  u  s  s  t  i  o  n
+3 9		A  E  E  I  q  u  s  s  t  y  o  n
+4 11	A  E  E  I  N  u  s  s  t  y  o  q
+5 10	A  E  E  I  N  O  s  s  t  y  u  q
+6 11	A  E  E  I  N  O  Q  s  t  y  u  s
+7 7		A  E  E  I  N  O  Q  S  t  y  u  s
+8 11	A  E  E  I  N  O  Q  S  S  y  u  t
+9 11	A  E  E  I  N  O  Q  S  S  T  u  y
+11 11	A  E  E  I  N  O  Q  S  S  T  U  y
+10 10	A  E  E  I  N  O  Q  S  S  T  U  Y
+
+Exercise 2.1.2
+The string "XABCD" will move "X" 4 times, as "X" will need to make its way to the end of the sequence.
+
+Exercise 2.1.3
+Any items in reverse order to that which we are sorting into will maximise the number of times the test succeeds, e.g the string DCBA.
+
+Exercise 2.1.4
+
+		0  1  2  3  4  5  6  7  8  9 10 11
+		e  a  s  y  q  u  e  s  t  i  o  n
+1 0		A  e  s  y  q  u  e  s  t  i  o  n
+2 2		a  e  S  y  q  u  e  s  t  i  o  n
+3 3		a  e  s  Y  q  u  e  s  t  i  o  n
+4 2		a  e  Q  s  y  u  e  s  t  i  o  n
+5 4		a  e  q  s  Y  u  e  s  t  i  o  n
+6 2		a  e  E  q  s  y  u  s  t  i  o  n
+7 5		a  e  e  q  s  S  y  u  t  i  o  n
+8 6		a  e  e  q  s  s  T  y  u  i  o  n
+9 3		a  e  e  O  q  s  s  t  y  u  i  n
+9 8		a  e  e  o  q  s  s  t  U  y  i  n
+10 3	a  e  e  I  o  q  s  s  t  u  y  n
+11 4	a  e  e  i  N  o  q  s  s  t  u  y
+
+Exercise 2.1.5
+A string in reverse order will always produce false conditions, i.e XDCBA.
+
+Exercise 2.1.6
+Insertion as the array is already sorted, whereas selection will always take n^2 whatever order the array is in.
+
+Exercise 2.1.7
+They should both run at the same speed, as reverse order in Insertion takes n^2 time.
+
+Exercise 2.1.9
+
+		0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0
+		e a s y s h e l l s o r t q u e s t i o n
+13-sort	
+		e a s y s h e l l s o r t Q u e s t i o n
+		e a s y s h e l l s o r t q U e s t i o n
+		e a E y s h e l l s o r t q u S s t i o n
+		e a e S s h e l l s o r t q u s Y t i o n
+		e a e s s h e l l s o r t q u s y T i o n
+		e a e s s h e l l s o r t q u s y t I o n
+		e a e s s h e l l s o r t q u s y t i O n
+		e a e s s h e l l s o r t q u s y t i o N
+4-sort
+		0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0
+		e a e s S h e l l s o r t q u s y t i o n
+		e a e s s H e l l s o r t q u s y t i o n
+		e a e s s h E l l s o r t q u s y t i o n
+		e a e L s h e S l s o r t q u s y t i o n
+		e a e l L h e s S s o r t q u s y t i o n
+		e a e l l h e s s S o r t q u s y t i o n
+		e a e l l h e s s s O r t q u s y t i o n
+		e a e l l h e R s s o S t q u s y t i o n
+		e a e l l h e r s s o s T q u s y t i o n
+		e a e l l h e r s Q o s t S u s y t i o n
+		e a e l l h e r s q o s t s U s y t i o n
+		e a e l l h e r s q o s t s u S y t i o n
+		e a e l l h e r s q o s t s u s Y t i o n
+		e a e l l h e r s q o s t s u s y T i o n
+		e a e l l h e r s q I s t s O s y t U o n
+		e a e l l h e O s q i R t s o S y t u S n
+		e a e l l h e o N q i r S s o s T t u s Y
+1-sort
+		0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0
+		A E e l l h e o n q i r s s o s t t u s y
+		a e E l l h e o n q i r s s o s t t u s y 
+		a e e L l h e o n q i r s s o s t t u s y
+		a e e l L h e o n q i r s s o s t t u s y
+		a e e H L L e o n q i r s s o s t t u s y
+		a e e E H L L o n q i r s s o s t t u s y
+		a e e e h l l O n q i r s s o s t t u s y
+		a e e e h l l N O q i r s s o s t t u s y
+		a e e e h l l n o Q i r s s o s t t u s y
+		a e e e h I L L N O Q r s s o s t t u s y
+		a e e e h i l l n o q R s s o s t t u s y
+		a e e e h i l l n o q r S s o s t t u s y
+		a e e e h i l l n o q r s S o s t t u s y
+		a e e e h i l l n o O Q R S S s t t u s y
+		a e e e h i l l n o o q r s s S t t u s y
+		a e e e h i l l n o o q r s s s T t u s y
+		a e e e h i l l n o o q r s s s t T u s y
+		a e e e h i l l n o o q r s s s t t U s y
+		a e e e h i l l n o o q r s s s S T T U y
+		a e e e h i l l n o o q r s s s s t t u Y
+		
+Exercise 2.1.10
+Becaus insertion sort's time speeds up when the array is sorted or partially sorted, but selection sort's time stays the same.
+
+
+		
+		
+		
+		
