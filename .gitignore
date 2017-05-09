@@ -3,3 +3,6 @@
 *.exe
 scratch.c
 *.class
+*/testfiles
+*/libs
+*.rkt
