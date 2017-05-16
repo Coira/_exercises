@@ -1,0 +1,15 @@
+Exercise List
+
++ 2.2.6
+  + Merge_AA.java
+  + MergeBU_AA.java
+  + Merge_AA_Output.txt
+  + MergeBU_AA_Output.txt
+
++ 2.2.8
+  + Merge_FewerMerges.java
+  + Some notes in "Text Answers.txt"
+
++ 2.2.9
+  + Merge_BetterAux.java
+
