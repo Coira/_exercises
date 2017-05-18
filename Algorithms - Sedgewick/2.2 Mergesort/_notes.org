@@ -13,3 +13,5 @@ Exercise List
 + 2.2.9
   + Merge_BetterAux.java
 
++ 2.2.11
+  + ImprovedSearch.java
