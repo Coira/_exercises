@@ -93,3 +93,6 @@ merge(a, 0, 31, 38)
 
 Exercise 2.2.8
 By skipping the merge step if the array is already sorted, we skip all the compares associated with merge(). Thus the only compares we do is the check to see if we need to call merge(), i.e is a[mid] <= a[mid+1]. This is performed only once per iteration, and grows linearly.
+
+Exercise 2.216 Natural Mergesort
+Worst-case, the array is in reverse sort order, and there will be N iterations, with each iteration increasing the first sorted subarray by 1 element. There will have to be N merges.
