@@ -6,3 +6,4 @@ scratch.c
 */testfiles
 */libs
 *.rkt
+*/Extra/*

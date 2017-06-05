@@ -1,0 +1,75 @@
+Exercise 2.3.1
+
+v = a[0] = E
+
+i  j   0  1  2  3  4  5  6  7  8  9  10 11
+0  12  E  A  S  Y  Q  U  E  S  T  I  O  N
+2  6   E  A  E  Y  Q  U  S  S  T  I  O  N
+12 2   E  A  E  Y  Q  U  S  S  T  I  O  N  // break
+       E  A  E  Y  Q  U  S  S  T  I  O  N  // exch(a, lo, j);
+
+Exercise 2.3.2
+
+lo  j   hi  0   1   2   3   4   5   6   7   8   9   10  11
+            E   A   S   Y   Q   U   E   S   T   I   O   N
+0   2   1   E   A   E   Y   Q   U   S   S   T   I   O   N
+0   1   1	A   E   E   Y   Q   U   S   S   T   I   O   N
+0       0   A   E   E   Y   Q   U   S   S   T   I   O   N  // subarray size 1
+3   11  11  A   E   E   N   Q   U   S   S   T   I   O   Y
+3   4   10  A   E   E   I   N   U   S   S   T   Q   O   Y
+3       3   A   E   E   I   N   U   S   S   T   Q   O   Y  // subarray size 1
+5   10  10  A   E   E   I   N   O   S   S   T   Q   U   Y
+5   5   9   A   E   E   I   N   O   S   S   T   Q   U   Y
+6   7   9   A   E   E   I   N   O   Q   S   T   S   U   Y
+6       6   A   E   E   I   N   O   Q   S   T   S   U   Y  // subarray size 1
+8   9   9   A   E   E   I   N   O   Q   S   S   T   U   Y
+8       8   A   E   E   I   N   O   Q   S   S   T   U   Y  // subarray size 1
+
+Exercise 2.3.3
+lg(N) times, as this is the maximum number of swaps it takes to get an element into the correct position.
+
+Exercise 2.3.4
+Max number of compares when partitions are uneven, e.g. when lowest element or highest element is partition.
+Max compare arrays:
+0123456789
+0123456798
+9876543210
+0912345678
+9012345678
+0198765432
+
+Exercise 2.3.5
+
+Rather than using 3-way partitioning, we can make use of the fact that there are only 2 values.
+Store the minimum value and use that as a pivot.
+It will take at most N compares to find the min, and N compares for the sort.
+We also avoid any redundant exchanges, as each swap moves 2 elements into the correct order, and we never swap two values that are equal (which would occasionally happen with 3-way quicksort).
+
+    public static void sort(Comparable[] a) {
+
+        //two values in array, min holds the smallest of the two
+        Comparable min = a[0];
+        int i = 0;
+        while (equals(a[++i], min))
+            ;
+        if (less(a[i], min))
+            min = a[i];
+
+        // scan left, scan right, swap out of order elements
+        int lt = 0;
+        int gt = a.length-1;
+        while (true) {
+            while (equals(a[lt], min))
+                lt++;
+            while (!equals(a[gt], min))
+                gt--;
+            if (lt >= gt) break;
+            exch(a, lt, gt);
+        }
+    }
+	
+2.3.8
+As the pivot will always be the median value, the array will always be split in half. Therefore the number of compares will be O(Nlg(N))
+
+2.3.9
+When there are just 2 or 3 distinct keys, for large arrays especially, many subarrays will have only a single distinct key, and there will be a lot of redundant partitioning.
