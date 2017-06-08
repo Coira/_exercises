@@ -104,6 +104,10 @@ lt   i    gt   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
 14   15   15   A A A A A A A A B B B B B D R C
 13   14   14   A A A A A A A A B B B B B D C R
 
+2.3.13
+The best and average cases will be O(lgN) as we can do no better than splitting the array in half.
+Worst case will be O(N) as in this case we use a min or max value as the pivot and the array's two halves are uneven.
+
 2.3.15
 1. Pick a bolt at random
 2. Compare each nut with that bolt

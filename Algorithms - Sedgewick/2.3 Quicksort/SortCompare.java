@@ -5,6 +5,8 @@ public class SortCompare {
         if (alg.equals("Quick")) { Quick.sort(a); }
         if (alg.equals("M3Quick")) { M3Quick.sort(a); }
         if (alg.equals("Stack")) { StackQuick.sort(a); }
+        if (alg.equals("Insert")) { InsertQuick.sort(a); }
+        if (alg.equals("M3Insert")) { M3InsertQuick.sort(a); }
         return timer.elapsedTime();
     }
 
