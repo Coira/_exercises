@@ -1,0 +1,14 @@
+ABCDEFGHIJKLMNOPQRSTUVWXYZ
+
+2.4.1
+RRPOTYIIUQE
+
+2.4.2
+It would not be constant time as, each time you've popped the maximum off the stack/queue, you'd have to then iterate thought the stack/queue looking for the next maximum, which itself would take O(N) time per item, and O(N^2) to pop off all the items in order.
+
+2.4.3
+
+2.4.4
+Yes, the maximum value sits at the root.
+
+
