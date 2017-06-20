@@ -13,6 +13,9 @@ public class PriorityQueue_OLL<Key extends Comparable<Key>>  {
     private Node tail;
     private int N = 0;
 
+    public PriorityQueue_OLL() {
+    }
+    
     public PriorityQueue_OLL(Key[] a) {
         for (int i = 0; i < a.length; i++)
             insert(a[i]);

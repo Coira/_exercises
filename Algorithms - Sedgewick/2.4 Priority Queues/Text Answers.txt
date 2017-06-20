@@ -4,11 +4,43 @@ ABCDEFGHIJKLMNOPQRSTUVWXYZ
 RRPOTYIIUQE
 
 2.4.2
-It would not be constant time as, each time you've popped the maximum off the stack/queue, you'd have to then iterate thought the stack/queue looking for the next maximum, which itself would take O(N) time per item, and O(N^2) to pop off all the items in order.
+It would not be constant time as, each time you've popped the maximum 
+off the stack/queue, you'd have to then iterate thought the stack/queue 
+looking for the next maximum, which itself would take O(N) 
+time per item, and O(N^2) to pop off all the items in order.
 
 2.4.3
+
+                   | insert | max  | delMax
+				   -----------------------
+Unordered Array PQ | O(1)   | O(N) | O(N)
+Ordered Array PQ   | O(N)   | O(1) | O(1)
+Unordered LL PQ    | O(1)   | O(N) | O(N)
+Ordered LL PQ      | O(N)   | O(1) | O(1)   
+
 
 2.4.4
 Yes, the maximum value sits at the root.
 
+2.4.5
+YTUSQNEASIOE
+
+2.4.6
+RPIO  // insert PRIO
+POI   // del
+RPIO  // insert R
+POI   // del * 2
+OII   // insert I
+II    // del
+TII   // insert T
+II    // del
+YII   // insert Y
+      // del * 3
+UQE   // insert QUE
+      // del * 3
+U     // insert U
+      // del
+E     // insert E
+
+	  
 
