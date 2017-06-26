@@ -42,5 +42,39 @@ U     // insert U
       // del
 E     // insert E
 
-	  
+2.4.7
+For a 31-key tree, the 2nd largest item can appear in positions 2 & 3.
+The 3rd largest at positions 2,3,4,5,6,7.
+The 4th largest at positions 4,5,6,7,8,9,10,11,12,13,14.
 
+2.4.8
+For a 31-key tree, the 2nd *smallest* item can appear in 
+positions 16 to 31.
+The 3rd smallest in positions 8 to 31.
+The 4th smallest in positions 4 to 31.
+	  
+2.4.10
+Parent of k: floor(k/2)-1
+Left and right children: 2k+1, 2k+2
+
+2.4.11
+Unordered array, as insertion will be constant time (apart from when we need to resize the array).
+
+2.4.12
+A heap would be best. An unordered array would take O(n) time to find the max. Although a heap and ordered array would take constant time to find-max, we would still need to reorganise the heap or array when we insert an item, even if the number of insertions is small, and a heap would be more efficient.
+
+2.4.13
+sink(ink k) {
+  while (2*k < N) {  // so we can remove j < N
+    int j = 2*k;
+    if (less(j, j+1)) j++;
+    if (!less(k, j)) break;
+    exch(k, j);
+    k = j;
+  }
+  // extra check needed for when j == 2 and N == 2
+  // as we may have left the heap out of order during delMax()
+  if (N == 2 && less(1, 2)) {
+    exch(2, 1);
+  }
+}
