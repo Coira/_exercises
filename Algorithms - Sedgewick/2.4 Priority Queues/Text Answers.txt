@@ -78,3 +78,8 @@ sink(ink k) {
     exch(2, 1);
   }
 }
+
+2.4.14
+There will be 1 exchange to move the last element to the top (which fills in the hole that delMax() left). Then sink will take floor(lgN)-2 exchanges to move that element into the right spot. lgN is the number of levels the heap has, as the element already starts at the top, and it will need to be sunk to the second to last layer. Therefore, delMax() will take a minimum of floor(lgN)-1 exchanges.
+"OMNKJILBAEDCFGH" uses 3 exchanges for a single delMax().
+If we performed another two delMax() then each would need 3 more exchanges, for a total of 9 exchanges for 3 delMax()s.
