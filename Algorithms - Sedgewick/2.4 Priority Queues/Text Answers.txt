@@ -83,3 +83,21 @@ sink(ink k) {
 There will be 1 exchange to move the last element to the top (which fills in the hole that delMax() left). Then sink will take floor(lgN)-2 exchanges to move that element into the right spot. lgN is the number of levels the heap has, as the element already starts at the top, and it will need to be sunk to the second to last layer. Therefore, delMax() will take a minimum of floor(lgN)-1 exchanges.
 "OMNKJILBAEDCFGH" uses 3 exchanges for a single delMax().
 If we performed another two delMax() then each would need 3 more exchanges, for a total of 9 exchanges for 3 delMax()s.
+
+2.4.16
+If the array is already sorted, heapsort will use the maximum number of compares. During delMin() (or delMax()), once the minimum value has been removed, the next minimum value will be placed at the root, and then will need to be sunk to the bottom layer. 
+If the array wasn't already sorted (e.g. the array is in reverse order), the value that replaces the root node might only have to go to the second to last layer, taking fewer compares to do so.
+Maximum number of compares: [1,2,3,...,30,31,32]
+Minimum number of compares: [32,31,30,...,3,2,1]
+
+2.4.18
+Yes, insert() with an item larger than all items, then delMax() will result in an identical heap.
+
+2.4.21
+Stack:
+Give each element a key, based on N. E.g. the first element pushed onto the heap will have a key 1, the second element a key 2, etc. Use a max-value heap. Remove items using its key.
+Queue:
+As above, but use a min-value heap.
+Randomized queue:
+Use a randomised key.
+
