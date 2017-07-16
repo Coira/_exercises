@@ -5,7 +5,8 @@
 public class MaxPQ<Key extends Comparable<Key>> {
     private Key[] pq;   // pq[0] left unused
     private int N = 0;
-
+    private Key minValue;
+    
     public MaxPQ() {
         pq = (Key[]) new Comparable[2];
     }
@@ -18,11 +19,18 @@ public class MaxPQ<Key extends Comparable<Key>> {
     public MaxPQ(Key[] a) {
         N = a.length;
         pq = (Key[]) new Comparable[N+1];
+        minValue = a[0];
         
         for (int i = N; i > N/2; i--) {
+            if (less(a[i-1], minValue)) {
+                minValue = a[i-1];   // 2.4.27
+            }
             pq[i] = a[i-1];
         }
         for (int i = N/2; i >= 1; i--) {
+            if (less(a[i-1], minValue)) {
+                minValue = a[i-1];   // 2.4.27
+            }
             pq[i] = a[i-1];
             sink(i);
         }
@@ -37,6 +45,11 @@ public class MaxPQ<Key extends Comparable<Key>> {
         }
         pq = temp;
     }
+
+    /* 2.4.27: return min value*/
+    public Key min() {
+        return minValue;
+    }
     
     public boolean isEmpty() {
         return N == 0;
@@ -47,6 +60,7 @@ public class MaxPQ<Key extends Comparable<Key>> {
     }
 
     public void insert(Key v) {
+        if (minValue == null || less(v, minValue)) { minValue = v; }
         if (N == pq.length-1) { resize(1+2*pq.length); }
         pq[++N] = v;
         swim(N);
@@ -58,6 +72,7 @@ public class MaxPQ<Key extends Comparable<Key>> {
         exch(1, N--);        // Exch with last item.
         pq[N+1] = null;      // Avoid loitering.
         sink(1);             // Restore heap property.
+        if (isEmpty()) { minValue = null; }
         return max;
     }
 
@@ -65,6 +80,11 @@ public class MaxPQ<Key extends Comparable<Key>> {
         return pq[i].compareTo(pq[j]) < 0;
     }
 
+    private boolean less(Key a, Key b) {
+        return a.compareTo(b) < 0;
+    }
+    
+      
     private void exch(int i, int j) {
         Key t = pq[i];
         pq[i] = pq[j];
@@ -96,15 +116,15 @@ public class MaxPQ<Key extends Comparable<Key>> {
     }
                  
     public static void main(String[] args) {
-        String[] a = "123456789".split("");
+        String[] a = "3456789".split("");
         MaxPQ<String> pq = new MaxPQ<String>();
         for (int i = 0; i < a.length; i++) {
             pq.insert(a[i]);
         }
-        for (int i = 0; i < a.length; i++) {
+        System.out.println(pq.min());
+        for (int i = 0; i < a.length-2; i++) {
             pq.delMax();
         }
-        //pq.show();
     }
 
 }

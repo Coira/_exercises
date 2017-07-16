@@ -1,4 +1,21 @@
-PriorityQueue_*
-MaxPQ 2.4.19
-2.4.22 array resizing
-ExplicitPQ 2.4.24
+#+STARTUP: indent
+
++ 2.4.15
+  + MinPQCheck.java : checks order of min-oriented heap
++ 2.4.21
+  + PriorityQueue_*.java
++ 2.4.19
+  + MaxPQ.java : bottom-up heap constructor
++ 2.4.22
+  + MaxPQ.java : array resizing
++ 2.4.24
+  + ExplicitPQ.java : uses a triply linked list instead of an array
++ 2.4.27
+  + MaxPQ.java : min() method
++ 2.4.29
+  + MinMaxPQ.java : supports various operations in constant/log time
++ 2.4.33
+  + IndexMinPQ.java : Index priority queue
+  + Multiway.java : Client for IndexMinPQ
++ 2.4.34
+  + IndexMinPQ.java
