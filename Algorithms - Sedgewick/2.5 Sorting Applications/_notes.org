@@ -1,2 +1,12 @@
-dedup + m3Quick
-2.5.8 Frequency + M3Quick
+#+STARTUP: indent
+
++ 2.5.2
+  + Compounds.java
++ 2.5.4
+  + Dedup.java
+  + M3Quick.java
++ 2.5.8
+  + Frequency.java
+  + M3Quick.java
++ 2.5.12
+  + SPT.java

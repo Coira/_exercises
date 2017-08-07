@@ -8,7 +8,7 @@ public class MinPQ<Key extends Comparable<Key>> {
     
     public MinPQ(int minN) {
         pq = (Key[]) new Comparable[minN+1];
-    }
+    }                show(x);
 
     public boolean isEmpty() {
         return N == 0;
