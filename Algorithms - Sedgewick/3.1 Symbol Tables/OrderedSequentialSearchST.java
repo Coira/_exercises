@@ -31,6 +31,12 @@ public class OrderedSequentialSearchST<Key extends Comparable<Key>, Value> {
         
         Node node = new Node(key, val, null);
 
+        // we can delete a key by equating its value with null
+        if (val == null) {
+            delete(key);
+            return;
+        }
+        
         if (isEmpty()) {
             first = node;
             N++;

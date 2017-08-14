@@ -1,0 +1,47 @@
+3.1.6
+Inserting a distinct word takes 1 call to put().
+If the word isn't distinct, it takes 1 call to put() and 1 to get().
+If we're inserting N items, then there are N calls to put() + W-D calls to get(), 
+where W is the # of words, and D is the # of distinct items. As N and W are the same (i.e the number of items or words in the table), then we can also saj that there will be W calls to put() and W-D calls to get().
+
+3.1.8
+monseigneur at 101 hits.
+
+3.1.10
+
+(Am I meant to be counting letter frequency in EASYQUESTION? It doesn't say.)
+EASYQUESTION
+
+put("E")
+   first --> "E" --> null
+
+put("A")
+	first --> "E" --> "A" --> null
+    compares: 1 in put()
+	
+put("S")
+	first --> "E" --> "A" --> "S" --> null
+	compares: 2 in put()
+
+etc...
+Y: 3 compares
+Q: 4 compares
+U: 5 compares
+
+put("E")
+	first --> "E" --> "A" --> "S" --> "Y" --> "Q" --> "U" --> null
+	compares: 1 in put(), then stops as letter already in table
+	
+put("S")
+	first --> "E" --> "A" --> "S" --> "Y" --> "Q" --> "U" --> null
+	compares: 3 in put(), then stops
+	
+T: 6 compares
+I: 7 compares
+O: 8 compares
+N: 9 compares
+
+first --> "E" --> "A" --> "S" --> "Y" --> "Q" --> "U" --> "T" --> "I" --> "O" --> "N" --> null
+
+Total compares: 49
+	
