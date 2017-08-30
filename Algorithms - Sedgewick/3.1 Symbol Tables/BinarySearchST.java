@@ -12,6 +12,8 @@ public class BinarySearchST<Key extends Comparable<Key>, Value> {
     public int size() { return N; }
 
     public boolean isEmpty() { return N == 0; }
+
+    public boolean contains(Key key) { return get(key) != null; }
     
     public Value get(Key key) {
         if (isEmpty()) return null;
@@ -52,7 +54,14 @@ public class BinarySearchST<Key extends Comparable<Key>, Value> {
     }
 
     public void delete(Key key) {
-        // exercise 3.1.16
+        if (contains(key)) {
+            int p = rank(key);
+            for (int i = p+1; i < N; i++) {
+                keys[i-1] = keys[i];
+                vals[i-1] = vals[i];
+            }
+        }
+        N--;
     }
 
     public Key min() {
@@ -68,9 +77,25 @@ public class BinarySearchST<Key extends Comparable<Key>, Value> {
         return keys[i];
     }
 
+    public Key floor(Key key) {
+        int i = rank(key);
+        if (keys[i] != key) {
+            if (i == 0) { return null; }
+            else { return keys[i-1]; }
+        }
+        return key;
+    }
+
+    public void show() {
+        for (int i = 0; i < N; i++) {
+            StdOut.print("(" + keys[i] + "," + vals[i] + ") ");
+        }
+        StdOut.println();
+    }
     //public Key floor(Key key) {
         // exercise 3.1.17
     //}
+
 
     /*
     public Iterable<Key> keys(Key lo, Key hi) {
@@ -84,4 +109,17 @@ public class BinarySearchST<Key extends Comparable<Key>, Value> {
         return q;
     } 
     */
+
+    public static void main(String[] args) {
+        BinarySearchST<Integer, String> st
+            = new BinarySearchST<Integer, String>(10);
+
+        st.put(1, "a");
+        st.put(1, "b");
+        st.put(3, "c");
+
+        StdOut.println(st.floor(2));
+        StdOut.println(st.floor(9));
+    }
+    
 }
