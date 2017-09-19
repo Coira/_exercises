@@ -1,0 +1,10 @@
+#+STARTUP: indent
+
++ 3.2.6
+  + BST_recursiveHeight.java
+  + BST_fieldHeight.java
+  + Queue.java
++ 3.2.7
+  + BST_recursiveAvgCompares.java
+  + BST_fieldAvgCompares.java
+  + Queue.java
