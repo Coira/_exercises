@@ -73,7 +73,7 @@ public class BST_recursiveAvgCompares<Key extends Comparable<Key>, Value> {
 
     private Node max(Node x) {
         if (x.right == null) return x;
-        return max(x.left);
+        return max(x.right);
     }
 
     public Key floor(Key key) {
@@ -107,7 +107,7 @@ public class BST_recursiveAvgCompares<Key extends Comparable<Key>, Value> {
         if (cmp == 0) return x;
         if (cmp > 0) return ceiling(x.right, key);
 
-        Node t = floor(x.left, key);
+        Node t = ceiling(x.left, key);
         if (t != null) return t;
         else return x;
     }

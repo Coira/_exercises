@@ -1,12 +1,10 @@
 /*
-  3.2.6
   Basic implementation of a binary search tree.
-  int height: Recursively computes height of the tree.
 */
 
 import java.util.Iterator;
 
-public class BST_recursiveHeight<Key extends Comparable<Key>, Value> {
+public class BST<Key extends Comparable<Key>, Value> {
     private Node root;
     private class Node {
         private Key key;
@@ -14,6 +12,7 @@ public class BST_recursiveHeight<Key extends Comparable<Key>, Value> {
         private Node left, right;
         private int N;
     
+
         public Node(Key key, Value val, int N ) {
             this.key = key; this.val = val; this.N = N;
         }
@@ -64,7 +63,7 @@ public class BST_recursiveHeight<Key extends Comparable<Key>, Value> {
         return min(x.left);
     }
 
-    private Key max() {
+    public Key max() {
         return max(root).key;
     }
 
@@ -91,6 +90,32 @@ public class BST_recursiveHeight<Key extends Comparable<Key>, Value> {
         else           return x;
     }
 
+    public Key select(int k) {
+        return select(root, k).key;
+    }
+
+    private Node select(Node x, int k) {
+        // Return Node containing key of rank k.
+        if (x == null) return null;
+        int t = size(x.left);
+        if (t > k) return select(x.left, k);
+        else if (t < k) return select(x.right, k-t-1);
+        else return x;
+    }
+
+    public int rank(Key key) {
+        return rank(key, root);
+    }
+
+    private int rank(Key key, Node x) {
+        // Return number of keys less than key in the subtree rooted at x.
+        if (x == null) return 0;
+        int cmp = key.compareTo(x.key);
+        if (cmp < 0) return rank(key, x.left);
+        else if (cmp > 0) return 1 + size(x.left) + rank(key, x.right);
+        else return size(x.left);
+    }
+    
     public Key ceiling(Key key) {
         Node x = ceiling(root, key);
         if (x == null) return null;
@@ -120,6 +145,17 @@ public class BST_recursiveHeight<Key extends Comparable<Key>, Value> {
         return x;
     }
 
+    public void deleteMax() {
+        root = deleteMax(root);
+    }
+
+    private Node deleteMax(Node x) {
+        if (x.right == null) return x.left;
+        x.right = deleteMax(x.right);
+        x.N = size(x.left) + size(x.right) + 1;
+        return x;
+    }
+    
     // eager Hibbard deletion
     public void delete(Key key) {
         root = delete(root, key);
@@ -160,27 +196,5 @@ public class BST_recursiveHeight<Key extends Comparable<Key>, Value> {
         if (cmplo <= 0 && cmphi >= 0) queue.enqueue(x.key);
         if (cmphi > 0) keys(x.right, queue, lo, hi);
     }
-
-    public int height() {
-        return height(root, 0);
-    }
-
-    private int height(Node node, int height) {
-        if (node == null) return height-1;
-        int lh = height(node.left, height+1);
-        int rh = height(node.right, height+1);
-        return (lh >= rh) ? lh : rh;
-    }
-
-    public static void main(String[] args) {
-        String[] sb = "HCAESRX".split(""); // best case, balanced
-        String[] sw = "XSRHECA".split(""); // worst case
-        BST_recursiveHeight bst = new BST_recursiveHeight();
-        for (int i = 0; i < sb.length; i++) {
-             bst.put(sb[i],i);
-        }
-        System.out.println(bst.height());
-    }
-    
 }
 
