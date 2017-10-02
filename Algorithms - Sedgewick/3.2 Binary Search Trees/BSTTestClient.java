@@ -1,3 +1,18 @@
+/* 
+   3.2.10 Test client for BST
+
+   Enter characters to put them on the tree.
+   Enter the following to issue a command:
+   dmax: delete max
+   dmin: delete min
+   del X: delete X
+   floor X: return the floor of X
+   ceil X: return the ceiling of X
+   select N: return Nth item
+   rank X: return the rank of X
+
+*/
+
 public class BSTTestClient {
     public static void main(String[] args) {
         BST<String, Integer> st;

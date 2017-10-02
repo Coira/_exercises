@@ -8,3 +8,10 @@
   + BST_recursiveAvgCompares.java
   + BST_fieldAvgCompares.java
   + Queue.java
++ 3.2.10
+  + BSTTestClient.java
+  + BST.java
+  + Queue.java
++ 3.2.13
+  + BST_nonrecPutGet.java
+  + Queue.java

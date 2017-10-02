@@ -50,3 +50,6 @@ Decreasing order, so that the keys that are accessed most are at the top of the 
 and the keys that are accessed least will be at the bottom of the tree.
 Therefore, the keys that are accessed the most will be faster to reach.
 
+3.2.11
+
+The first node has only one possible position, the root. The second node, n_2, has two possible positions, the left child of the root, or the right child of the root. It cannot be a child of the root, as then the tree will not be of height N. Node n_3 also has two possible positions, the left or right child of n_2, and so on for N nodes. Therefore, there are 2^(N-1) binary tree shapes of height N.
