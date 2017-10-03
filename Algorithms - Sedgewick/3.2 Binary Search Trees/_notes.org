@@ -15,3 +15,7 @@
 + 3.2.13
   + BST_nonrecPutGet.java
   + Queue.java
++ 3.2.25
+  + PerfectBalance.java
+  + BST.java
+  + Queue.java

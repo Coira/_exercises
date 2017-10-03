@@ -53,3 +53,378 @@ Therefore, the keys that are accessed the most will be faster to reach.
 3.2.11
 
 The first node has only one possible position, the root. The second node, n_2, has two possible positions, the left child of the root, or the right child of the root. It cannot be a child of the root, as then the tree will not be of height N. Node n_3 also has two possible positions, the left or right child of n_2, and so on for N nodes. Therefore, there are 2^(N-1) binary tree shapes of height N.
+
+3.2.15
+floor("Q") : E Q
+select(5) : E Q
+ceiling("Q") : E Q
+rank("J") : E Q J
+size("D", "T") :
+keys("D", "T") : E D Q J M T S
+
+3.2.17
+
+Insert: EASYQUESTION
+
+          E
+         / \
+        /   \
+       /     \
+      A       S
+             /  \
+            /    \
+           /      \
+          Q        Y
+         /         /
+        /         /
+       /         /
+      I         U
+       \       /
+        \     /
+         \   /
+         O  T
+        /
+       /
+      /
+     N
+
+     
+     
+Delete: E
+       
+      I
+     / \
+    A   S
+       / \
+      Q   Y
+     /   /
+    O   U
+   /   /
+  N   T
+  
+  
+  
+Delete: A
+
+      I
+       \
+        S
+       / \
+      Q   Y
+     /   /
+    O   U
+   /   /
+  N   T
+  
+  
+  
+Delete: S
+
+      I
+       \
+        T
+       / \
+      Q   Y
+     /   /
+    O   U
+   /   
+  N   
+
+  
+  
+Delete: Y
+
+      I
+       \
+        T
+       / \
+      Q   U
+     /   
+    O   
+   /   
+  N
+  
+  
+  
+Delete: Q
+
+      I
+       \
+        T
+       / \
+      O   U
+     /   
+    N   
+
+    
+    
+Delete: U
+
+      I
+       \
+        T
+       /
+      O   
+     /   
+    N
+    
+    
+    
+Delete: T
+
+      I
+       \
+        O
+       /
+      N  
+
+     
+
+Delete: I
+
+        O
+       /
+      N
+      
+      
+      
+Delete: O
+      
+      N
+   
+   
+3.2.19
+Delete in alphabetical order
+
+
+Insert: EASYQUESTION
+
+          E
+         / \
+        /   \
+       /     \
+      A       S
+             /  \
+            /    \
+           /      \
+          Q        Y
+         /         /
+        /         /
+       /         /
+      I         U
+       \       /
+        \     /
+         \   /
+         O  T
+        /
+       /
+      /
+     N
+
+Delete: A
+
+      E
+       \
+        S
+       /  \
+      Q    Y
+     /     /
+    I     U
+     \   /
+      O T     
+     /   
+    N 
+
+
+    
+Delete: E
+
+        S
+       /  \
+      Q    Y
+     /     /
+    I     U
+     \   /
+      O T     
+     /   
+    N 
+
+    
+    
+Delete: I
+
+        S
+       /  \
+      Q    Y
+     /     /
+    O     U
+   /     /
+  N     T     
+        
+    
+
+Delete: N
+
+        S
+       /  \
+      Q    Y
+     /     /
+    O     U
+         /
+        T     
+        
+    
+
+Delete: O
+
+        S
+       /  \
+      Q    Y
+           /
+          U
+         /
+        T    
+
+
+        
+Delete: Q
+
+         S
+          \
+           Y
+          /
+         U
+        /
+       T
+
+       
+        
+Delete: S
+
+           Y
+          /
+         U
+        /
+       T
+
+       
+       
+Delete: T
+
+           Y
+          /
+         U
+        
+        
+        
+Delete: U
+
+           Y
+      
+      
+3.2.19
+
+Delete root order.
+
+Delete: E
+       
+      I
+     / \
+    A   S
+       / \
+      Q   Y
+     /   /
+    O   U
+   /   /
+  N   T
+
+
+
+Delete: I
+
+      N
+     / \
+    A   S
+       / \
+      Q   Y
+     /   /
+    O   U
+       /
+      T  
+
+
+
+Delete: N
+
+      O
+     / \
+    A   S
+       / \
+      Q   Y
+         /
+        U
+       /
+      T             
+      
+
+
+Delete: O
+
+      Q
+     / \
+    A   S
+         \
+          Y
+         /
+        U
+       /
+      T      
+
+      
+
+Delete: Q
+
+      S
+     / \
+    A   Y
+       /
+      U
+     /
+    T
+    
+      
+
+Delete: S
+
+      T
+     / \
+    A   Y
+       /
+      U
+      
+      
+      
+Delete: T
+
+      U
+     / \
+    A   Y
+      
+      
+      
+Delete: U
+
+      Y
+     /
+    A
+      
+      
+      
+Delete: Y
+
+    A    
+    
+    
+3.2.22
+If we have a node, X, then its predecessor, P, must be in X's left subtree, as P is smaller than X. Furthermore, it must be the largest value in X's left subtree. If there was a value larger than P but smaller than X then that node would be X's predecessor instead of P. As there can be no larger value in this subtree, P cannot have a right child.
+We can use the same reasoning to say that X's successor has no left child.
