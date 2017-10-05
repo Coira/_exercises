@@ -19,3 +19,14 @@
   + PerfectBalance.java
   + BST.java
   + Queue.java
++ 3.2.28
+  + BST_Caching.java
+  + Queue.java
++ 3.2.29
+  + BST_Traversal.java
+  + Queue.java
++ 3.2.30
+  + BST.java
+  + BST_Reconstruction.java
+  + Queue.java
+  

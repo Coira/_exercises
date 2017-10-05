@@ -1,14 +1,14 @@
 /*
-  Basic implementation of a binary search tree.
+  3.2.28 BST with Software Caching for put() and get()
 */
 
 import java.util.Iterator;
 
-public class BST<Key extends Comparable<Key>, Value> {
+public class BST_Caching<Key extends Comparable<Key>, Value> {
     private Node root;
-    public class Node {
-        public Key key;
-        public Value val;
+    private class Node {
+        private Key key;
+        private Value val;
         private Node left, right;
         private int N;
     
@@ -17,6 +17,8 @@ public class BST<Key extends Comparable<Key>, Value> {
             this.key = key; this.val = val; this.N = N;
         }
     }
+
+    private Node cachedNode;
     
     public int size() { return size(root); }
 
@@ -25,21 +27,30 @@ public class BST<Key extends Comparable<Key>, Value> {
         else return x.N;
     }
 
-    public Value get(Key key) { return get(root, key); }
+    // keep a pointer to the most recent Node accessed
+    public Value get(Key key) {
+        if (cachedNode != null && cachedNode.key == key) {
+            return cachedNode.val;
+        }
+        Node node = get(root, key);
+        cachedNode = node;
+        return node.val;
+    }
 
-    private Value get(Node x, Key key) {
+    private Node get(Node x, Key key) {
         // Return value associated with key in the subtree rooted at x;
         // Return null if key not present in subtree rooted at x.
         if (x == null) return null;
         int cmp = key.compareTo(x.key);
         if      (cmp < 0) return get(x.left, key);
         else if (cmp > 0) return get(x.right, key);
-        else return x.val;
+        else return x;
     }
 
     public void put(Key key, Value val) {
         // Search for key. Update value if found; grow table if new.
         root = put(root, key, val);
+        cachedNode = root;
     }
 
     private Node put(Node x, Key key, Value val) {
@@ -139,7 +150,11 @@ public class BST<Key extends Comparable<Key>, Value> {
     }
 
     private Node deleteMin(Node x) {
-        if (x.left == null) return x.right;
+        if (x.left == null) {
+            // clear cache if we're deleting the node it points to
+            if (cachedNode == x) { cachedNode = null; } 
+            return x.right;
+        }
         x.left = deleteMin(x.left);
         x.N = size(x.left) + size(x.right) + 1;
         return x;
@@ -150,7 +165,10 @@ public class BST<Key extends Comparable<Key>, Value> {
     }
 
     private Node deleteMax(Node x) {
-        if (x.right == null) return x.left;
+        if (x.right == null) {
+            if (cachedNode == x) { cachedNode = null; }
+            return x.left;
+        }
         x.right = deleteMax(x.right);
         x.N = size(x.left) + size(x.right) + 1;
         return x;
@@ -158,6 +176,9 @@ public class BST<Key extends Comparable<Key>, Value> {
     
     // eager Hibbard deletion
     public void delete(Key key) {
+        if (cachedNode != null && cachedNode.key == key) {
+            cachedNode = null;
+        }
         root = delete(root, key);
     }
 
@@ -196,35 +217,18 @@ public class BST<Key extends Comparable<Key>, Value> {
         if (cmplo <= 0 && cmphi >= 0) queue.enqueue(x.key);
         if (cmphi > 0) keys(x.right, queue, lo, hi);
     }
+    
+    public static void main(String[] args) {
+        String[] s = "EASYQUESTION".split("");
+        BST_Caching<String, Integer> bst = new BST_Caching<String, Integer>();
 
-    public Queue<Node> preorderTraversal() {
-        Queue<Node> queue = new Queue<Node>();
-        preorderTraversal(root, queue);
-        return queue;
+        for (int i = 0; i < s.length; i++) {
+            bst.put(s[i], i);
+        }
+        bst.get("A");
+        bst.deleteMin();
+        bst.deleteMax();
+        bst.delete("N");
     }
-
-    private void preorderTraversal(Node node, Queue<Node> queue) {
-        if (node == null) return;
-
-        queue.enqueue(node);
-        preorderTraversal(node.left, queue);
-        preorderTraversal(node.right, queue);
-
-    }
-
-    public Queue<Node> postorderTraversal() {
-        Queue<Node> queue = new Queue<Node>();
-        postorderTraversal(root, queue);
-        return queue;
-    }
-
-    private void postorderTraversal(Node node, Queue<Node> queue) {
-        if (node == null) return;
-
-        postorderTraversal(node.left, queue);
-        postorderTraversal(node.right, queue);
-        queue.enqueue(node);
-    }
-
 }
 

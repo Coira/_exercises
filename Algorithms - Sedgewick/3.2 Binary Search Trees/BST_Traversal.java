@@ -1,14 +1,14 @@
 /*
-  Basic implementation of a binary search tree.
+  3.2.29 Inorder traversal with constant extra memory.
 */
 
 import java.util.Iterator;
 
-public class BST<Key extends Comparable<Key>, Value> {
+public class BST_Traversal<Key extends Comparable<Key>, Value> {
     private Node root;
-    public class Node {
-        public Key key;
-        public Value val;
+    private class Node {
+        private Key key;
+        private Value val;
         private Node left, right;
         private int N;
     
@@ -197,34 +197,66 @@ public class BST<Key extends Comparable<Key>, Value> {
         if (cmphi > 0) keys(x.right, queue, lo, hi);
     }
 
-    public Queue<Node> preorderTraversal() {
-        Queue<Node> queue = new Queue<Node>();
-        preorderTraversal(root, queue);
-        return queue;
+
+    /* 
+       Morris Traversal 
+       http://www.geeksforgeeks.org/?p=6358
+       1. Initialize current as root
+       2. While current is not null
+          If current does not have left child
+            a. Process data
+            b. Follow the right pointer
+          Else if we've come to the end of the right subtree
+            Follow the right pointer (which now points to the node's
+            parent), and reverse pointers
+          Else
+            a. Make current the right child of the rightmost
+               node in current's left subtree
+            b. Go left
+    */
+    
+    public void traverse() {
+        if (root ==  null) return;
+        Node curr = root;
+        Node pre;
+        while (curr != null) {
+
+            // No more left children, process node
+            if (curr.left == null) {
+                StdOut.println(curr.key);
+                curr = curr.right;
+            }
+            else {
+                pre = curr.left;
+                while (pre.right != null && pre.right != curr) {
+                    pre = pre.right;
+                }
+                // Make child point to parent
+                if (pre.right == null) {
+                    pre.right = curr;
+                    curr = curr.left;
+                }
+                
+                // Revert changes
+                else {
+                    pre.right = null;
+                    StdOut.println(curr.key);
+                    curr = curr.right;
+                }
+                
+            }
+        }
     }
 
-    private void preorderTraversal(Node node, Queue<Node> queue) {
-        if (node == null) return;
+    public static void main(String[] args) {
+        String[] s = "EASYQUESTION".split("");
+        BST_Traversal<String, Integer> bst = new BST_Traversal<String, Integer>();
 
-        queue.enqueue(node);
-        preorderTraversal(node.left, queue);
-        preorderTraversal(node.right, queue);
-
+        for (int i = 0; i < s.length; i++) {
+            bst.put(s[i], i);
+        }
+        
+        bst.traverse();
     }
-
-    public Queue<Node> postorderTraversal() {
-        Queue<Node> queue = new Queue<Node>();
-        postorderTraversal(root, queue);
-        return queue;
-    }
-
-    private void postorderTraversal(Node node, Queue<Node> queue) {
-        if (node == null) return;
-
-        postorderTraversal(node.left, queue);
-        postorderTraversal(node.right, queue);
-        queue.enqueue(node);
-    }
-
 }
 
