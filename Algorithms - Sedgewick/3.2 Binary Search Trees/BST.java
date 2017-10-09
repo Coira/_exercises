@@ -226,5 +226,27 @@ public class BST<Key extends Comparable<Key>, Value> {
         queue.enqueue(node);
     }
 
+    public boolean isBST() {
+        return isBST(root, null, null);
+    }
+
+    private boolean isBST(Node x, Key min, Key max) {
+        if (x == null) return true;
+        if (min != null && x.key.compareTo(min) <= 0) return false;
+        if (max != null && x.key.compareTo(max) >= 0) return false;
+        return isBST(x.left, min, x.key) && isBST(x.right, x.key, max);
+    }
+
+    public static void main(String[] args) {
+        String[] str = "ARSTDHNEIO".split("");
+        BST<String, Integer> bst = new BST<String, Integer>();
+        for (int i = 0; i < str.length; i++) {
+            bst.put(str[i], i);
+        }
+
+        StdOut.println(bst.isBST());
+    }
+             
+
 }
 
