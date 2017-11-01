@@ -3,3 +3,10 @@
 3.3.3 
 To get a tree of height 1, we need the tree to consist of only 3-nodes.
 AXERCSHM
+
+3.3.9
+i.)  No, does not have perfect black balance.
+ii.) No, F is larger than E yet on its left.
+iii.) Yes
+iv.) Yes
+
