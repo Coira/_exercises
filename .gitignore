@@ -7,3 +7,4 @@ scratch.c
 */libs
 *.rkt
 */Extra/*
+*.svg
