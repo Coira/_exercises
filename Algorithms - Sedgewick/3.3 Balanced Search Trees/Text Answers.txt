@@ -10,3 +10,12 @@ ii.) No, F is larger than E yet on its left.
 iii.) Yes
 iv.) Yes
 
+3.3.13
+True
+
+3.3.14
+The new key gets added to the right of the rightmost subtree.
+As the tree fills up, the red links move up the tree as we correct
+right-leaning links and 4-nodes. The height of the tree gradually
+increases.
+
