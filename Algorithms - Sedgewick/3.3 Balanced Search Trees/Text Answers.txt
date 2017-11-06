@@ -19,3 +19,5 @@ As the tree fills up, the red links move up the tree as we correct
 right-leaning links and 4-nodes. The height of the tree gradually
 increases.
 
+3.3.15
+False.
