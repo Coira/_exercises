@@ -21,3 +21,30 @@ increases.
 
 3.3.15
 False.
+
+3.3.19
+2 bits per node. That is, we would need another colour for 5,6,7,8-nodes.
+
+3.3.20
+(2^1-1) = 1. For 1 node, the internal path length (ipl) is 0.
+(2^2-1) = 3. For 3 nodes, the ipl is 2.
+(2^3-1) = 7. For 7 nodes, the ipl is 10.
+(2^4-1) = 15. For 15 nodes, the ipl is 34.
+That is, the ipl of the next level of the tree is the ipl of the
+previous level of the tree plus the length from root to any node
+in the last level multiplied by the number of nodes in that level.
+
+Let n be the power, where n>=1, and N be the number of nodes. Then (2^n)-1 = N.
+To get the internal path length of a red-black tree with N nodes, we can deduce the
+following equation:
+(1 * 2^1) + (2 * 2^2) + (3 * 2^3) + ... + (n-1)*(2^(n-1))
+This is an arithmetic-geometric equation, and if we solve it (omitted), we get
+the following:
+
+ipl = 2 + (2^n)(n-2).
+
+As (2^n)-1 = N, then n = log_2(N+1), so we can also use
+this equation:
+
+ipl = 2 + (N+1)(log_2(N+1) - 2)
+
