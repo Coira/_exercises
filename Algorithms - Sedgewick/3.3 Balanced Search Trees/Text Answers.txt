@@ -48,3 +48,10 @@ this equation:
 
 ipl = 2 + (N+1)(log_2(N+1) - 2)
 
+3.3.22
+One order would be CEBDFA.
+
+3.3.24
+The worst case scenario happens just before the tree is able to balance itself. The tree is perfectly balanced when its number of nodes, N, is a power of 2 minus 1 (e.g. when N=7, as we can see from Exercise 3.3.5.).
+In the worst case, several red nodes in a row occur on the left side of the tree, which can be achieved by adding the keys so they always get added to the left, e.g. if the keys are added in reverse order. If we look at N=6, the longest path from root to null link 4, which equals 2lg(6).
+
