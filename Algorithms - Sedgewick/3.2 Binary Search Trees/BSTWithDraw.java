@@ -3,36 +3,22 @@
 */
 
 import java.util.Iterator;
-//import edu.princeton.cs.algs4.StdDraw;
 
 public class BSTWithDraw<Key extends Comparable<Key>, Value> {
     private Node root;
-    private int treeLevel;
-    
-    private int levels = 0;
-    private int positions = 0;
 
     private double nodeRadius = 0.02;
+    private double dx, dy;
     
     public class Node {
         public Key key;
         public Value val;
         private Node left, right;
         private int N;
-        //private double x, y;
+        private double x, y;
+        private int p;
         public Node(Key key, Value val, int N ) {
             this.key = key; this.val = val; this.N = N;
-        }
-    }
-
-    
-    private class Coords {
-        private double x;
-        private double y;
-
-        public Coords(double x, double y) {
-            this.x = x;
-            this.y = y;
         }
     }
     
@@ -272,58 +258,90 @@ public class BSTWithDraw<Key extends Comparable<Key>, Value> {
         }
     }
 
-    
+
+    private int height() {
+        return height(root);
+    }
+
+    private int height(Node n) {
+        if (n == null) return -1;
+        return 1 + Math.max(height(n.left), height(n.right));
+    }
+
+
     public void draw() {
+        
         StdDraw.setCanvasSize(800, 800);
         StdDraw.setScale(-.05, 1.05);
+        StdDraw.enableDoubleBuffering();
         StdDraw.clear(StdDraw.WHITE);
-        StdDraw.setPenRadius(0.005);
-        draw(root, 0, new Coords(0, 1.0));
+        StdDraw.setPenRadius(0.004);
+        dx = (1.0 / size());
+        dy = 0.05;
+        setCoords(root, 0);
+        draw(root);
+        StdDraw.show();
     }
-    
-    double dy = 0.075;
 
-    private void draw(Node n, int level, Coords pCoords) {
-        if (n == null) { return ; }
+
+    private double setCoords(Node n, int level) {
+        if (n == null) { return -1; }
+
         int rank = rank(n.key);
-        double posX = (1.0/size()) * rank;
-        if (posX > 1.0) posX = 1.0;
+        double posX = dx * rank;
         double posY = 1.0-(level*dy);
-        drawNode(n, posX, posY);
-        drawLine(pCoords.x, pCoords.y, posX, posY);
-        draw(n.left, level+1, new Coords(posX, posY));
-        draw(n.right, level+1, new Coords(posX, posY));
         
+        double lc = setCoords(n.left, level+1);
+        double rc = setCoords(n.right, level+1);
+        
+        if (lc >= 0 && rc >= 0 ) {
+            posX = (lc + rc) / 2.0; // centre node above children
+        }
+
+        n.x = posX;
+        n.y = posY;
+        return posX;
     }
     
-    double startX = 0.0;
+    private void draw(Node n) {
+        if (n != null) {
+            if (n.left != null) {
+                drawLine(n.x, n.y, n.left.x, n.left.y);
+                draw(n.left);
+            }
+            if (n.right != null) {
+                drawLine(n.x, n.y, n.right.x, n.right.y);
+                draw(n.right);
+            }
+            
+            drawNode(n, n.x, n.y);
+        }
+    }
+    
     private void drawNode(Node n, double x, double y) {
         if (n == null) return;
 
         double tx = 0.000000025;
         double ty = 0.002;
-        StdDraw.circle(startX+x, y, nodeRadius);
-        StdDraw.text(startX+(x-tx), y-ty, (String)n.key);
+        StdDraw.setPenColor(StdDraw.WHITE);
+        StdDraw.filledCircle(x, y, nodeRadius);
+        StdDraw.setPenColor(StdDraw.BLACK);
+        StdDraw.circle(x, y, nodeRadius);
+        StdDraw.text((x-tx), y-ty, (String)n.key);
     }
 
     private void drawLine(double x0, double y0, double x1, double y1) {
-        StdDraw.line(startX+x0,y0,startX+x1,y1);
+        StdDraw.line(x0,y0,x1,y1);
     }
     
     public static void main(String[] args) {
-        String[] str = "SEARCHXMPL".split("");
-        // String[] str = "HDBACFEGLJIKNMO".split("");
-        // String[] str = "BCDEFGHIJKLMNA".split("");
+        String[] str = "HDBACFEGLJIKNMO".split("");
   
         BSTWithDraw<String, Integer> bst = new BSTWithDraw<String, Integer>();
         for (int i = 0; i < str.length; i++) {
             bst.put(str[i], i);
         }
-        //bst.printLevel();
-        //StdOut.println(bst.rank("N"));
-        //StdOut.println(bst.size());
         bst.draw();
-        //StdOut.println(bst.isBST());
     }
 }
              
