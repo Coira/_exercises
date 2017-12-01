@@ -1,39 +1,38 @@
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Iterator;
-
-public class SymbolTable234Tree<Key extends Comparable<Key>, Value> {
+public class RedBlackBSTFull<Key extends Comparable<Key>, Value> {
 
     private static final boolean RED = true;
     private static final boolean BLACK = false;
 
-    public Node root;
-
+    private Node root;
+    
     private double dx, dy; // used for tree drawing
     private double nodeRadius = 0.03;
     
-    public class Node {
-        private Key key;
-        private Value val;
-        public Node left, right;
+    private class Node {
+        Key key;
+        Value val;
+        Node left, right;
         int N;
         boolean colour;
-        double x, y;  // used for tree drawing
+
+        double x, y; // used for tree drawing
         
-        public Node(Key key, Value val, int N, boolean colour) {
+        Node(Key key, Value val, int N, boolean colour) {
             this.key = key;
             this.val = val;
             this.N = N;
             this.colour = colour;
         }
     }
-
-    public boolean isRed(Node x) {
+    
+    private boolean isEmpty() { return root == null; }
+    
+    private boolean isRed(Node x) {
         if (x == null) return false;
         return x.colour == RED;
     }
 
-    public Node rotateLeft(Node h) {
+    private Node rotateLeft(Node h) {
         Node x = h.right;
         h.right = x.left;
         x.left = h;
@@ -44,7 +43,7 @@ public class SymbolTable234Tree<Key extends Comparable<Key>, Value> {
         return x;
     }
 
-    public Node rotateRight(Node h) {
+    private Node rotateRight(Node h) {
         Node x = h.left;
         h.left = x.right;
         x.right = h;
@@ -54,23 +53,20 @@ public class SymbolTable234Tree<Key extends Comparable<Key>, Value> {
         h.N = 1 + size(h.left) + size(h.right);
         return x;
     }
-    
-    
+
     private void flipColours(Node h) {
-        h.colour = !h.colour;
-        h.right.colour = !h.right.colour;
-        h.left.colour = !h.left.colour;
+        h.colour = RED;
+        h.left.colour = BLACK;
+        h.right.colour = BLACK;
     }
-    
-    
+
     public int size() { return size(root); }
-    public boolean isEmpty() { return root == null; }
     
     private int size(Node x) {
         if (x == null) return 0;
         else return x.N;
     }
-    
+
     public void put(Key key, Value val) {
         root = put(root, key, val);
         root.colour = BLACK;
@@ -80,23 +76,21 @@ public class SymbolTable234Tree<Key extends Comparable<Key>, Value> {
         if (h == null) // Do standard insert, with red link to parent
             return new Node(key, val, 1, RED);
 
-        // moving this line here changes this tree to a 234 tree
-        if (isRed(h.left) && isRed(h.right))     flipColours(h);  // 4-node. Sorts out 4-nodes on the way down.
-        
         int cmp = key.compareTo(h.key);
         if (cmp < 0) h.left = put(h.left, key, val);
         else if (cmp > 0) h.right = put(h.right, key, val);
         else h.val = val;
 
-        if (isRed(h.right) && !isRed(h.left))    h = rotateLeft(h);   // right-leaning 3-node
-        if (isRed(h.left) && isRed(h.left.left)) h = rotateRight(h);  // unbalanced 4-node (left)
-        //if (isRed(h.left) && isRed(h.right))     flipColours(h);
+        if (isRed(h.right) && !isRed(h.left))    h = rotateLeft(h);
+        if (isRed(h.left) && isRed(h.left.left)) h = rotateRight(h);
+        if (isRed(h.left) && isRed(h.right))     flipColours(h);
 
         h.N = size(h.left) + size(h.right) + 1;
         return h;
     }
 
     private int height() {
+        System.out.println(root.key);
         Node curr = root;
         int h = 0;
         while (curr != null) {
@@ -107,31 +101,6 @@ public class SymbolTable234Tree<Key extends Comparable<Key>, Value> {
             curr = curr.right;
         }
         return h;
-    }
-
-    public Value get(Key key) {
-        return get(key, root);
-    }
-
-    private Value get(Key key, Node h) {
-        if (h == null) return null;
-        
-        int cmp = key.compareTo(h.key);
-        if (cmp == 0) return h.val;
-        if (cmp < 0) return get(key, h.left);
-        else return get(key, h.right);
-    }
-
-    public boolean contains(Key key) {
-        return contains(key, root);
-    }
-
-    private boolean contains(Key key, Node h) {
-        if (h == null) return false;
-        int cmp = key.compareTo(h.key);
-        if (cmp == 0) return true;
-        if (cmp < 0) return contains(key, h.left);
-        else return contains(key, h.right);
     }
 
     public int rank(Key key) {
@@ -145,7 +114,6 @@ public class SymbolTable234Tree<Key extends Comparable<Key>, Value> {
         else if (cmp > 0) return 1 + size(x.left) + rank(key, x.right);
         else return size(x.left);
     }
-
     
     public void draw() {
         StdDraw.setScale(-.05, 1.05);
@@ -221,41 +189,21 @@ public class SymbolTable234Tree<Key extends Comparable<Key>, Value> {
         StdDraw.line(x0,y0,x1,y1);
     }
 
-    /* Copied and modified from the code further down in the exercises. */
-    
-    public void delMin() {
-        if (!isRed(root.left) && !isRed(root.right)) {
-            root.colour = RED;
-        }
-        root = delMin(root);
-        if (!isEmpty()) root.colour = BLACK;
-    }
-
-    private Node delMin(Node h) {
-        if (h.left == null)
-            return null;
-        if (!isRed(h.left) && !isRed(h.left.left)) {
-            h = moveRedLeft(h);
-        }
-        h.left = delMin(h.left);
-        return balance(h);
-    }
-
     private Node moveRedLeft(Node h) {
+        // Assuming that h is red and both h.left adn h.left.lfet
+        // are black, make h.left or one of its children red.
         flipColours(h);
         if (isRed(h.right.left)) {
-                h.right = rotateRight(h.right);
-                h = rotateLeft(h);
-                flipColours(h);
-                
-                if (isRed(h.right.right)) {
-                    h.right = rotateLeft(h.right);
-                }
+            h.right = rotateRight(h.right);
+            h = rotateLeft(h);
+            flipColours(h);
         }
         return h;
     }
 
     private Node moveRedRight(Node h) {
+        // Assuming that h is red and both h.right and h.right.left
+        // are black, make h.right or one of its children red.
         flipColours(h);
         if (isRed(h.left.left)) {
             h = rotateRight(h);
@@ -263,15 +211,48 @@ public class SymbolTable234Tree<Key extends Comparable<Key>, Value> {
         }
         return h;
     }
-    
-    private Node balance(Node h) {
+
+    private Node min(Node h) {
         if (h == null) return null;
-        if (isRed(h.right)) h = rotateLeft(h);
-        if (isRed(h.right) && !isRed(h.left)) h = rotateLeft(h);
-        if (isRed(h.left) && isRed(h.left.left)) h = rotateRight(h);
-        if (isRed(h.left) && isRed(h.right)) flipColours(h);
-        h.N = size(h.left) + size(h.right) + 1;
+        while (h.left != null) {
+            h = h.left;
+        }
         return h;
+    }
+    
+    public void deleteMin() {
+        if (!isRed(root.left) && !isRed(root.right)) {
+            root.colour = RED;
+        }
+        root = deleteMin(root);
+        if (!isEmpty()) root.colour = BLACK;
+    }
+
+    private Node deleteMin(Node h) {
+        if (h.left == null)
+            return null;
+        if (!isRed(h.left) && !isRed(h.left.left))
+            h = moveRedLeft(h);
+        h.left = deleteMin(h.left);
+        return balance(h);
+    }
+
+    public void deleteMax() {
+        if (!isRed(root.left) && !isRed(root.right))
+            root.colour = RED;
+        root = deleteMax(root);
+        if (!isEmpty()) root.colour = BLACK;
+    }
+
+    private Node deleteMax(Node h) {
+        if (isRed(h.left))
+            h = rotateRight(h);
+        if (h.right == null)
+            return null;
+        if (!isRed(h.right) && !isRed(h.right.left))
+            h = moveRedRight(h);
+        h.right = deleteMax(h.right);
+        return balance(h);
     }
 
     public void delete(Key key) {
@@ -298,54 +279,37 @@ public class SymbolTable234Tree<Key extends Comparable<Key>, Value> {
                 Node x = min(h.right);
                 h.key = x.key;
                 h.val = x.val;
-                h.right = delMin(h.right);
+                h.right = deleteMin(h.right);
             }
             else h.right = delete(h.right, key);
         }
         return balance(h);
     }
-
-    private Node min(Node h) {
+                
+    private Node balance(Node h) {
         if (h == null) return null;
-        while (h.left != null) {
-            h = h.left;
-        }
+        if (isRed(h.right)) h = rotateLeft(h);
+        if (isRed(h.right) && !isRed(h.left)) h = rotateLeft(h);
+        if (isRed(h.left) && isRed(h.left.left)) h = rotateRight(h);
+        if (isRed(h.left) && isRed(h.right)) flipColours(h);
+        h.N = size(h.left) + size(h.right) + 1;
         return h;
     }
 
-    public Iterator<Key> keys() {
-        Queue<Key> q = new LinkedList();
-        return keys(root, q).iterator();
-    }
-
-    private Queue<Key> keys(Node h, Queue<Key> q) {
-        if (h == null) return q;
-        keys(h.left, q);
-        q.add(h.key);
-        keys(h.right, q);
-        return q;
-    }
-    
     public static void main(String[] args) {
-       
-        SymbolTable234Tree<String, Integer> t =
-            new SymbolTable234Tree<String,Integer>();
-        
-        String[] str = "HDBACFEGLJIKNMO".split("");
-
-        for (int i = 0; i < str.length; i++) {
-            t.put(str[i], i);
+        String[] s = "HDBACFEGLJIKNM".split("");
+        RedBlackBSTFull<String, Integer> bst
+            = new RedBlackBSTFull<String, Integer>();
+        for (int i = 0; i < s.length; i++) {
+            bst.put(s[i], i);
         }
-
-         t.delete("H");
-         t.delete("B");
-         // t.draw();
-         StdOut.println(t.get("O"));
-
-         Iterator<String> it = t.keys();
-         while (it.hasNext()) {
-             StdOut.println(it.next());
-         }
-         
+        bst.delete("H");
+        bst.deleteMin();
+        bst.deleteMax();
+        bst.draw();
     }
+        
 }
+        
+            
+        
