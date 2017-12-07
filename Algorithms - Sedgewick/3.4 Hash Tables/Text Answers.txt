@@ -7,3 +7,106 @@
 2:
 3:  (N,9) --> (I,7) --> (S,2)
 4:  (O,8) --> (T,6) --> (Y,3) --> (E,0)
+
+3.4.5
+
+Sure it's legal, but it's not very effective; every item will have the same hash
+and will be placed in the same bucket.
+
+3.4.10
+
+For M = 16
+0: A                     8:  Y
+1: Q                     9:  I
+2: T                     10: O
+3:                       11:                     
+4:                       12: E
+5:                       13: U
+6: S                     14:
+7:                       15: N
+
+For M = 10
+0: A                     5: Y
+1: U                     6: Q
+2: I                     7: O
+3: N                     8: S
+4: E                     9: T
+
+3.4.11
+
+M = 4
+E:0, A:0
+0: E                     2:
+1: A                     3:
+
+M = 8
+S:6, Y:0
+0: E                     4:
+1: A                     5:
+2: Y                     6: S
+3:                       7:
+
+M = 16
+Q:0, U:12, T:1, I:8
+0: E                     8:  I
+1: A                     9:
+2: Y                     10: S
+3: Q                     11:
+4: T                     12: U
+5:                       13:
+6:                       14:
+7:                       15:
+
+M = 32
+O:26, N:15
+0: E                     16: I
+1: A                     17:
+2: Y                     18: S
+3: Q                     19:
+4: T                     20: U
+5:                       21:
+6:                       22:
+7:                       23:
+8:                       24:
+9:                       25:
+10:                      26: O
+11:                      27:
+12:                      28:
+13:                      29:
+14:                      30:
+15: N                    31:
+
+3.4.12
+
+None of the given results could possibly occur.
+
+Minimum and maximum number of probes is 12. 
+There are three keys with hash 4 (keys D, E and F); whichever order we put them in they will end up in positions 4,5 and 6. 
+There are two keys with hash 0 (B and C), so these will end up in positions 0 and 1.
+There are two keys with hash 2 (A and G), which will end up in positions 2 and 3.
+As the groups of keys end up in distinct positions, and never interfer with the other groups, there is no way of increasing the number of probes.
+
+As an example, take the order ABCDEFG
+A: hash=2, probes position 2, inserts here (number of probes = 1)
+B: hash=0, probes position 0, inserts here (number of probes = 1)
+C: hash=0, probes 0 then 1, inserts at 1 (number of probes = 2)
+D: hash=4, probes 4, inserts here (number of probes = 1)
+E: hash=4, probes 4 then 5, inserts at 5 (number of probes = 2)
+F: hash=4, probes 4 then 5 then 6, inserts at 6 (number of probes = 3)
+G: hash=2, probes 2 then 3, inserts at 3 (number of probes = 2)
+
+Total number of probes = 1 + 1 + 2 + 1 + 2 + 3 + 2 = 12
+
+3.4.13
+a. and c.) We will have a long cluster of N keys and when we search 
+we will need to check all N keys.
+
+3.4.14
+None, if the hash function is equally likely to hash to each table position, we will not have any long clusters of keys (unless we are
+really unlucky).
+
+3.4.15
+1 + 2 + 3 + ... + (N-1) + N = (N+1)*(N/2)
+
+
+
