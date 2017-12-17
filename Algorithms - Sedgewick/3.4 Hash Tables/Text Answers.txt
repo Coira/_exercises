@@ -10,8 +10,7 @@
 
 3.4.5
 
-Sure it's legal, but it's not very effective; every item will have the same hash
-and will be placed in the same bucket.
+Sure it's legal, but it's not very effective; every item will have the same hash and will be placed in the same bucket.
 
 3.4.10
 
@@ -40,38 +39,38 @@ E:0, A:0
 1: A                     3:
 
 M = 8
-S:6, Y:0
-0: E                     4:
-1: A                     5:
-2: Y                     6: S
+E:4, A:0, S:6, Y:0
+0: A                     4: E
+1: Y                     5:
+2:                       6: S
 3:                       7:
 
 M = 16
-Q:0, U:12, T:1, I:8
-0: E                     8:  I
-1: A                     9:
-2: Y                     10: S
-3: Q                     11:
-4: T                     12: U
-5:                       13:
-6:                       14:
+A:0, Y:8, E:12, S:6, Q:0, U:12, T:1, I:8
+0: A                     8:  Y
+1: Q                     9:  I
+2: T                     10: 
+3:                       11:
+4:                       12: E
+5:                       13: U
+6: S                     14:
 7:                       15:
 
 M = 32
-O:26, N:15
-0: E                     16: I
-1: A                     17:
-2: Y                     18: S
-3: Q                     19:
-4: T                     20: U
+A:0, Q:16, T:17, S:6, Y:8, I:24, E:12, U:28, O:26, N:15
+0:  A                    16: Q
+1:                       17: T
+2:                       18: 
+3:                       19:
+4:                       20: 
 5:                       21:
-6:                       22:
+6:  S                    22:
 7:                       23:
-8:                       24:
+8:  Y                    24: I
 9:                       25:
 10:                      26: O
 11:                      27:
-12:                      28:
+12: E                    28: U
 13:                      29:
 14:                      30:
 15: N                    31:
@@ -102,11 +101,74 @@ a. and c.) We will have a long cluster of N keys and when we search
 we will need to check all N keys.
 
 3.4.14
-None, if the hash function is equally likely to hash to each table position, we will not have any long clusters of keys (unless we are
-really unlucky).
+None, if the hash function is equally likely to hash to each table position, we will not have any long clusters of keys (unless we are really unlucky).
 
 3.4.15
-1 + 2 + 3 + ... + (N-1) + N = (N+1)*(N/2)
+
+Let's assume that we start with a table of size 2. When the table is half full we create a new table that is twice the size, and rehash and reinsert all elements already in the table. We then resume adding more elements to the table.
+The worst-case scenario is where all items hash to the same key every single time, so the maximum number of probes are performed for each insertion, both during insert and resize.
+When the number of keys N is a power of two we can predict how many probes will be needed. This assumes that resize happens as in the code given, for example, if the table size is 8 we resize when inserting the 5th key.
+Given the string "ABCDEFGHIJKLMNOP" and a hash function that always returns the same hash value (e.g. the hash function from Exercise 3.4.5), and N characters from the string above, we can see how many probes are used. Let M be the table size, which starts at M=2.
+
+N=2: A inserted, takes 1 probe
+     Resize, "A" re-inserted, takes 1 probe. M is now 4.
+     B inserted, takes 2 probes
+     Total: "A":      1
+            Resize: + 1
+            "B":    + 2
+                  =  1 + (1+2) + 3
+            
+N=3:
+    A inserted, 1 probe
+    Resize, "A" re-inserted, 1 probe      (M=4)
+    B inserted, 2 probes
+    Resize, "AB" re-inserted, 1+2 probes  (M=8)
+    C inserted, 3 probes
+    Total: "A":      1
+           Resize: + 1
+           "B":    + 2
+           Resize: + 1 + 2
+           "C":    + 3
+                 = 1 + (1+2) + (1+2+3)
+                 = 10
+
+N=4:
+    As N=3 plus
+    D inserted, 4 probes
+    Total: [From N=3]:    1 + (1+2) + (1+2+3)
+                  "D":  + 4
+                      = 1 + (1+2) + (1+2+3+4)
+                      = 14
+                      
+And so forth. For example, when N=8, then 
+total number of probes = 1 + (1+2) + (1+2+3+4) + (1+2+3+4+5+6+7+8).
+
+As an aside, note that 1+2+3+...+N = (N+1)*(N/2).
+
+Taking N=8 as an example again, notice that the sum can be written thus:
+(8+1)(8/2) + (4+1)(4/2) + (2+1)(2/2) + (1+1)(1/2) = 50.
+Or even
+((8/1)+1)(8/2) + ((8/2)+1)(8/4) + ((8/8)+1)(8/16)) = 50.
+Note that the denominators can all be represented as powers of 2, e.g. 16=2^4.
+Generalising for N (as long as N is a power of 2):
+
+Probes = ((N/(2^0))+1)(N/(2^1)) + ((N/(2^1))+1)(N/(2^2)) + ((N/(2^2))+1)(N/(2^3)) + ... + ((N/N)+1)(N/(2N))
+
+Which gives a summation that can be reduced to the equation
+                  (1/3)(N+2)(2N-1)
+(See the separate image file TODO for the summation).
+
+So when we insert 16 keys, we need (1/3)(16+2)(2*16-1) = 186 probes.
+
+Further to this, we can also calculate the number of probes when N is not a power of two by noticing that, for example, when N=5, total number of probes = 1 + (1+2) + (1+2+3+4) + (1+2+3+4+5+6+7+8) - (6+7+8). 
+However the equations are a little too messy to type in here as it involves logs and floor. See the separate image file TODO to see the equation's final form. 
+
+
+           
+
+
+
+
 
 
 
