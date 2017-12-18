@@ -156,12 +156,12 @@ Probes = ((N/(2^0))+1)(N/(2^1)) + ((N/(2^1))+1)(N/(2^2)) + ((N/(2^2))+1)(N/(2^3)
 
 Which gives a summation that can be reduced to the equation
                   (1/3)(N+2)(2N-1)
-(See the separate image file TODO for the summation).
+(See the separate image file 3.4.15a.png for the summation).
 
 So when we insert 16 keys, we need (1/3)(16+2)(2*16-1) = 186 probes.
 
-Further to this, we can also calculate the number of probes when N is not a power of two by noticing that, for example, when N=5, total number of probes = 1 + (1+2) + (1+2+3+4) + (1+2+3+4+5+6+7+8) - (6+7+8). 
-However the equations are a little too messy to type in here as it involves logs and floor. See the separate image file TODO to see the equation's final form. 
+Further to this, we can also calculate the number of probes regardless of N being a power of two by, for example, noticing that when N=5, total number of probes = 1 + (1+2) + (1+2+3+4) + (1+2+3+4+5+6+7+8) - (6+7+8). 
+However the equations are a little too messy to type in here as it involves logs and ceil. See the separate image file 3.4.15b.png or if you use emacs and latex the file 3.4.15.org to see the equation's final form. 
 
 
            

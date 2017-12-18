@@ -1,0 +1,49 @@
+#+STARTUP: content
+#+STARTUP: indent
+#+STARTUP: latexpreview
+#+LATEX_HEADER: \usepackage{amsmath}
+#+LATEX_HEADER: \usepackage[T1]{fontenc}
+#+LATEX_HEADER: \usepackage{gfsartemisia-euler}
+
+
+ \(\text{ When N is the number of keys inserted, and is a power of two: }\)
+
+\[\sum_{k=0}^{log_2{N}}\Big{(}\frac{N}{2^k}+1\Big{)}\Big{(}{\frac{N}{2^{k+1}}\Big{)}}}\]
+
+ \(\text{ This resolves to: }\)
+
+\[(1/3)(N+2)(2N-1)\]
+
+
+ \[ \text{ Further to this, we can work out how many probes it takes for N regardless of whether N is a power of two or not. } \]
+
+ \[ \text{Let P(N) be the number of probes it takes to insert N keys.} \]
+
+ \[ \text{ As an example, consider N = 5. The next power of two is 8, i.e. } 2^3 \text{, which is equivalent to }  2^{\lceil log_2(5) \rceil}.\]
+ \[ \text{ From previously, we know that }\] 
+
+\[P(8) = \sum_{k=0}^{\log_{2}{8}}{\Big{(}\frac{8}{2^k}+1\Big{)}\Big{(}\frac{8}{2^{k+1}}\Big{)}\]
+
+ \[ \text{ which we can write in terms of N=5 by substituting } \lceil 2^{\log_{2}{5}} \rceil \text{ for 8. }\]
+
+\[P(8) = \sum_{k=0}^{\log_{2}{}}{\Big{(}\frac{\lceil 2^{\log_{2}{5}} \rceil}{2^k}+1\Big{)}\Big{(}\frac{\lceil 2^{\log_{2}{5}} \rceil}{2^{k+1}}\Big{)}\]
+
+ \[ \text{ To calculate P(5), observe that } \]
+ 
+\begin{align*}
+P(5) &= 1 + (1+2) + (1+2+3+4) + (1+2+3+4+5+6+7+8) - (6+7+8) \\
+     &= P(8) - (6+7+8) \\
+     &= P(8) - \big{[}(8+1)(8/2)-(5+1)(5/2)\big{]} 
+\end{align*}
+
+ \[ \text{ That is, we can calculate P(N) by calculating P for the next power up from N, then subtracting the extra probes. } \]
+
+ \[ \text{ To generalise for N, let } x = \lceil \log_{2}{N} \rceil. \text { Then: } \]
+ 
+\[P(N) =  \sum_{k=0}^{x}\Big{(}{\frac{2^{x}}{2^k}+1}\Big{)}\Big{(}\frac{2^x}{2^k}\Big{)} - \Big{[}(2^x+1)(\frac{2^x}{2})-(N+1)(\frac{N}{2})\Big{]} \]
+
+ \[ \text { Finally, resolving the summation gives us an equation in terms of N. } \]
+
+\[ P(N) = \frac{1}{3} \Big{(} 2^{x} + 2 \Big{)} \Big{(} 2^{x+1}-1 \Big{)} - \Big{[}(2^x+1)(\frac{2^x}{2})-(N+1)(\frac{N}{2})\Big{]} \]
+
+
