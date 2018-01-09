@@ -164,7 +164,11 @@ Further to this, we can also calculate the number of probes regardless of N bein
 However the equations are a little too messy to type in here as it involves logs and ceil. See the separate image file 3.4.15b.png or if you use emacs and latex the file 3.4.15.org to see the equation's final form. 
 
 
-           
+3.4.17
+
+Index:  0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 
+  Key:  P  M        A  H  S  L       E           R  X 
+Value: 10  9        8  5  0  11      12          3  7
 
 
 

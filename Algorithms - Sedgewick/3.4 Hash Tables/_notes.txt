@@ -1,0 +1,17 @@
+#+STARTUP: indent
+
++ 3.4.2
+  + SeparateChainingHashST_Alt.java
++ 3.4.3
+  + SeparateChainingHashST_IntField.java
++ 3.4.4
+  + PerfectHash.java
++ 3.4.9
+  + SeparateChainingHashST_EagerDelete.java
++ 3.4.18
+  + SeparateChainingHashST_AverageProbes.java
+  + SequentialSearchST.java
++ 3.4.19
+  + SeparateChainingHastST.java
+  + LinearProbingHashST.java
+  + SequentialSearchST.java

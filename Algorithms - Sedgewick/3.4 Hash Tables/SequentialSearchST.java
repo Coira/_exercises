@@ -6,7 +6,7 @@ public class SequentialSearchST<Key, Value> {
     private Node first;
     private int N = 0;
     
-    private class Node {
+    public class Node {
         Key key;
         Value val;
         Node next;
