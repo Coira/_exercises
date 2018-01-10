@@ -1,17 +1,17 @@
 import java.util.Iterator;
 
-public class LinearProbingHashST<Key, Value> {
+public class LinearProbingHashST_AvgCost<Key, Value> {
     private int N = 0;
     private int M = 16;
     private Key[] keys;
     private Value[] vals;
 
-    public LinearProbingHashST() {
+    public LinearProbingHashST_AvgCost() {
         keys = (Key[]) new Object[M];
         vals = (Value[]) new Object[M];
     }
 
-    public LinearProbingHashST(int cap) {
+    public LinearProbingHashST_AvgCost(int cap) {
         keys = (Key[]) new Object[cap];
         vals = (Value[]) new Object[cap];
         M = cap;
@@ -22,8 +22,8 @@ public class LinearProbingHashST<Key, Value> {
     }
 
     private void resize(int cap) {
-        LinearProbingHashST<Key, Value> t;
-        t = new LinearProbingHashST<Key, Value>(cap);
+        LinearProbingHashST_AvgCost<Key, Value> t;
+        t = new LinearProbingHashST_AvgCost<Key, Value>(cap);
         for (int i = 0; i < M; i++) {
             if (keys[i] != null) {
                 t.put(keys[i], vals[i]);
@@ -52,6 +52,18 @@ public class LinearProbingHashST<Key, Value> {
         return null;
     }
 
+    // Exercise 3.4.20
+    public double hitCost() {
+        double alpha = (double)N/M;
+        return (1.0/2.0)*(1.0 + (1.0/(1.0-alpha)));
+    }
+
+    // Exercise 3.4.21
+    public double missCost() {
+        double alpha = (double)N/M;
+        return (1/2.0)*(1.0 + (1.0/Math.pow(1-alpha,2)));
+    }
+
     // Exercise 3.4.19
     public Iterable<Key> keys() {
         return new HashTableIterable();
@@ -75,16 +87,15 @@ public class LinearProbingHashST<Key, Value> {
     }
                         
     public static void main(String[] args) {
-        String s = "SEARCHXMPLAARSTDHNEIZXCVBKM<QWFPGJLUY:";
-        LinearProbingHashST<Character, Integer> st
-            = new LinearProbingHashST<Character, Integer>();
+        String s = "SEARCHXMPLAQWFPGJL";
+        LinearProbingHashST_AvgCost<Character, Integer> st
+            = new LinearProbingHashST_AvgCost<Character, Integer>();
         for (int i = 0; i < s.length(); i++) {
             st.put(s.charAt(i),i);
-        }
         
-        Iterable<Character> it = st.keys();
-        for (Character c : it) {
-            StdOut.print(c + " ");
+            StdOut.println(st.hitCost());
+            StdOut.println(st.missCost());
+            StdOut.println();
         }
         
     }
