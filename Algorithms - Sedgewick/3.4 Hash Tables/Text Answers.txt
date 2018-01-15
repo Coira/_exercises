@@ -1,7 +1,9 @@
 3.4 Hash Tables
 
 3.4.1
-
+Note: Using 0 index. 
+      'A' is in position 0 of the alphabet, 'B' is in position 1, etc.
+	  
 0:  (U,5) --> (A,1)
 1:  (Q,4)
 2:
@@ -170,9 +172,118 @@ Index:  0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15
   Key:  P  M        A  H  S  L       E           R  X 
 Value: 10  9        8  5  0  11      12          3  7
 
+3.4.27
 
+EASYQUTION
 
+'E', hash1 = 2, hash2 = 2, insert into list 2
 
+0:
+1:
+2: E
 
+'A', hash1 = 0, hash2 = 0, insert into list 0
 
+0: A
+1:
+2: E
 
+'S', hash1 = 0, hash2 = 0, insert into list 0
+
+0: S --> A
+1:
+2: E
+
+'Y', hash1 = 0, hash2 = 0, insert into list 0
+
+0: Y --> S --> A
+1:
+2: E
+
+'Q', hash1 = 2, hash2 = 2, insert into list 2
+
+0: Y --> S --> A
+1:
+2: Q --> E
+
+'U', hash1 = 1, hash2 = 1, insert into list 1
+
+0: Y --> S --> A
+1: U
+2: Q --> E
+
+'T', hash1 = 2, hash2 = 2, insert into list 2
+
+0: Y --> S --> A
+1: U
+2: T --> Q --> E
+
+'I', hash1 = 1, hash2 = 1, insert into list 1
+
+0: Y --> S --> A
+1: I --> U
+2: T --> Q --> E
+
+'O', hash1 = 1, hash2 = 1, insert into list 1
+
+0: Y --> S --> A
+1: O --> I --> U
+2: T --> Q --> E
+
+'N', hash1 = 2, hash2 = 2, insert into list 2
+
+0: Y --> S --> A
+1: O --> I --> U
+2: N --> T --> Q --> E
+
+The average number of probes will still be the same as a hash table with just the one hash function, but the list lengths will be more likely to be shorter, as long as the two hash functions don't always hash to the same value.
+
+3.4.28
+
+Let k be the position of the key in the alphabet, with A=1, B=2, etc.
+Hash1: 11*k % M (used for initially placing the key)
+Hash2: 17*k % M (used for probing)
+String: "EASYQUTION"
+M = 11
+As the question doesn't specify, we will ignore resizing.
+(Of course, hash1 will always be zero as M = 11, and 11 times any number is always divisible by 11).
+
+'E', hash1: 0, hash2: 8
+index: 0  1  2  3  4  5  6  7  8  9 10
+key:   E                                   
+
+'A', hash1: 0, hash2: 6
+index: 0  1  2  3  4  5  6  7  8  9 10
+key:   E                 A                         
+
+'S', hash1: 0, hash2: 4
+index: 0  1  2  3  4  5  6  7  8  9 10
+key:   E           S     A                  
+
+'Y', hash1: 0, hash2: 7
+index: 0  1  2  3  4  5  6  7  8  9 10
+key:   E           S     A  Y               
+
+'Q', hash1: 0, hash2: 3
+index: 0  1  2  3  4  5  6  7  8  9 10
+key:   E        Q  S     A  Y               
+
+'U', hash1: 0, hash2: 5
+index: 0  1  2  3  4  5  6  7  8  9 10
+key:   E        Q  S  U  A  Y               
+
+'T', hash1: 0, hash2: 10
+index: 0  1  2  3  4  5  6  7  8  9 10
+key:   E        Q  S  U  A  Y       T        
+
+'I', hash1: 0, hash2: 10
+index: 0  1  2  3  4  5  6  7  8  9 10
+key:   E        Q  S  U  A  Y     I T        
+
+'O', hash1: 0, hash2: 2
+index: 0  1  2  3  4  5  6  7  8  9 10
+key:   E     O  Q  S  U  A  Y     I T        
+
+'N', hash1: 0, hash2: 7
+index: 0  1  2  3  4  5  6  7  8  9 10
+key:   E  N  O  Q  S  U  A  Y     I T        

@@ -23,3 +23,9 @@
   + LinearProbing_AvgCost.java
 + 3.4.26
   + LinearProbing_LazyDelete.java
++ 3.4.27
+  + SequentialChaining_DoubleProbing.java
+    + SequentialSearchST.java
+	  + Queue.java
++ 3.4.28
+  + LinearProbingHashST_DoubleHashing.java
