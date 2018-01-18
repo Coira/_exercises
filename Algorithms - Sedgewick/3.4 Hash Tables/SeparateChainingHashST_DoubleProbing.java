@@ -46,27 +46,55 @@ public class SeparateChainingHashST_DoubleProbing<Key, Value> {
     }
 
     public void put(Key key, Value val) {
-        if (get(key) == null) { N++; }
+
+        if (val == null) {
+            delete(key);
+            return;
+        }
         
         int h1 = hash1(key);
         int h2 = hash2(key);
-        int list1Size = st[h1].size();
-        int list2Size = st[h2].size();
 
-        if (list1Size <= list2Size) { st[h1].put(key,val); }
-        else { st[h2].put(key,val); }
+        if (st[h1].get(key) != null) {
+            st[h1].put(key, val);
+        }
+        else if (st[h2].get(key) != null) {
+            st[h2].put(key, val);
+        }
+        else {
+            int list1Size = st[h1].size();
+            int list2Size = st[h2].size();
+            
+            if (list1Size <= list2Size) { st[h1].put(key,val); }
+            else { st[h2].put(key,val); }
+            N++;
+        }
+    }
+
+    // Exercises 3.4.29
+    public void delete(Key key) {
+        int h1 = hash1(key);
+        int h2 = hash2(key);
+        if (st[h1].get(key) != null) {
+            st[h1].delete(key);
+            N--;
+        }
+        else if (st[h2].get(key) != null) {
+            st[h2].delete(key);
+            N--;
+        }
     }
     
-    
     public static void main(String[] args) {
-        String s = "SEARCHXMPLA";
+        String s = "SEARCHXMPLSE";
         SeparateChainingHashST_DoubleProbing<Character, Integer> st
             = new SeparateChainingHashST_DoubleProbing<Character, Integer>();
         for (int i = 0; i < s.length(); i++) {
             st.put(s.charAt(i),i);
         }
 
-        
+        st.delete('Z');
+        st.delete('A');
         for (int i = 0; i < s.length(); i++) {
             StdOut.println(s.charAt(i) + " " + st.get(s.charAt(i)));
         }

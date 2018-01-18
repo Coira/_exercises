@@ -29,3 +29,10 @@
 	  + Queue.java
 + 3.4.28
   + LinearProbingHashST_DoubleHashing.java
++ 3.4.29
+  + SequentialChaining_DoubleProbing.java
+    + SequentialSearchST.java
+	  + Queue.java
+  + LinearProbingHashST_DoubleHashing.java
++ 3.4.31
+  + CuckooHash.java

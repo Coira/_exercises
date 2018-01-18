@@ -54,7 +54,7 @@ public class SequentialSearchST<Key, Value> {
         for (Node x = first; x != null; x = x.next) {
             if (key.equals(x.key))
                 return x.val; // search hit
-		}
+        }
         return null;      // search miss
     }
 

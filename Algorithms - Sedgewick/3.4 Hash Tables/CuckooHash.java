@@ -2,7 +2,7 @@ import java.util.Iterator;
 
 public class CuckooHash<Key, Value> {
     private int N = 0; // number of keys
-    private int M = 4; // table size
+    private int M = 1; // table size
     
     private Key[] keys1; // table 1
     private Value[] vals1;
@@ -68,11 +68,11 @@ public class CuckooHash<Key, Value> {
 
     // create new hash function by adding a random number to it
     private void resetConstants() {
-        hash1Constant = (int)(Math.random() * M);
+        hash1Constant = (int)(Math.random() * (M * 10) + 2);
 
         hash2Constant = hash1Constant;
         while (hash2Constant == hash1Constant) {
-            hash2Constant = (int)(Math.random() * M);
+            hash2Constant = (int)(Math.random() * (M * 10) + 2);
         }
     }
 
@@ -92,11 +92,17 @@ public class CuckooHash<Key, Value> {
     
     public void put(Key key, Value val) {
 
-        // TODO eager delete
-        // if (val == null) delete(key);
+        // no null keys
+        if (key == null) return;
         
+        // eager delete, if val is null, remove item and return
+        if (val == null) {
+            delete(key);
+            return;
+        }
+
+        // if key exists, replace value and return
         if (get(key) != null) {
-            StdOut.println("key exists");
             int h1 = hash(key, hash1Constant);
             int h2 = hash(key, hash2Constant);
             if (keys1[h1] == key) vals1[h1] = val;
@@ -104,13 +110,14 @@ public class CuckooHash<Key, Value> {
             return;
         }
 
-        if (N >= keys1.length*2) // TODO resize when half full
+        if (N >= keys1.length) 
             resize(M*2);
                                       
         int loops = 0;
         Key insertKey = key;  // Key to be inserted
         Value insertVal = val; // Value to be inserted
-        
+
+        // loop is terminated when we have no more keys to insert
         while (insertKey != null) {
             Key tempKey;
             Value tempVal;
@@ -118,7 +125,6 @@ public class CuckooHash<Key, Value> {
             // insert key/value pair into first table
             int h1 = hash(insertKey, hash1Constant);
 
-            StdOut.println(insertKey + " " + loops + " " + h1);
             insertKey = swapKey(keys1, insertKey, h1);
             insertVal = swapValue(vals1, insertVal, h1);
 
@@ -135,9 +141,6 @@ public class CuckooHash<Key, Value> {
                 loops = 0;
                 resetConstants();
             }
-
-            print();
-            StdOut.println("\n");
         }
         N++;
     }
@@ -146,14 +149,28 @@ public class CuckooHash<Key, Value> {
         int h1 = hash(key, hash1Constant);
         int h2 = hash(key, hash2Constant);
 
-        if (keys1[h1] != null && keys1[h1] == key) return vals1[h1];
-        if (keys2[h2] != null && keys2[h2] == key) return vals2[h2];
+        if (keys1[h1] == key) return vals1[h1];
+        if (keys2[h2] == key) return vals2[h2];
 
         return null;
     }
 
     public void delete(Key key) {
-        // TODO
+        int h1 = hash(key, hash1Constant);
+        int h2 = hash(key, hash2Constant);
+
+        if (keys1[h1] == key) {
+            keys1[h1] = null;
+            vals1[h1] = null;
+            N--;
+        }
+        else if (keys2[h2] == key) {
+            keys2[h2] = null;
+            vals2[h2] = null;
+            N--;
+        }
+
+        if (N > 0 && N <= keys1.length/2) { resize(keys1.length/2); }
     }
 
     public void print() {
@@ -168,7 +185,37 @@ public class CuckooHash<Key, Value> {
             if (x == null) StdOut.print("_ ");
             else StdOut.print(x + " ");
         }
+        StdOut.println();
     }
+
+    public Iterable<Key> keys() {
+        return new CuckooHashIterable();
+    }
+
+    private class CuckooHashIterable implements Iterable<Key> {
+        public Iterator<Key> iterator() {
+            return new Iterator<Key>() {
+                private int i = 0;
+                private Key[] keys = keys1;
+                private int count = 0;
+                public boolean hasNext() { return count < N; }
+                public Key next() {
+                    if (i == keys.length) {
+                        keys = keys2;
+                        i = 0;
+                    }
+                    if (keys[i] == null) {
+                        i++;
+                        return next();
+                    }
+                    count++;
+                    return keys[i++];
+                }
+                public void remove() { }
+            };
+        }
+    }
+  
                                           
     public static void main(String[] args) {
         String s = "ABCDEFGHIJKLMNOP";
@@ -179,10 +226,24 @@ public class CuckooHash<Key, Value> {
         }
 
         st.put('A', 11);
-        for (int i = 0; i < s.length(); i++) {
-            StdOut.println(s.charAt(i) + " " + st.get(s.charAt(i)));
+        st.delete('B');
+        st.print();
+        StdOut.println();
+        
+        Iterable<Character> it = st.keys();
+        for (Character c : it) {
+            StdOut.print(c + ":" + st.get(c) + " ");
         }
+        StdOut.println();
 
+        for (int i = 0; i < s.length()-1; i++) {
+            st.delete(s.charAt(i));
+        }
+        st.delete('X');
+        it = st.keys();
+        for (Character c : it) {
+            StdOut.print(c + ":" + st.get(c) + " ");
+        }
     }
         
 }
