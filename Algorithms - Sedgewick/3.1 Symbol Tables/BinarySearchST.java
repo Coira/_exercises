@@ -60,8 +60,8 @@ public class BinarySearchST<Key extends Comparable<Key>, Value> {
                 keys[i-1] = keys[i];
                 vals[i-1] = vals[i];
             }
+			N--;
         }
-        N--;
     }
 
     public Key min() {

@@ -5,3 +5,11 @@
     + ST.java, Queue.java
   + HashSET.java
     + HashST.java
++ 3.5.2
+  + SequentialSearchSET.java
+    + Queue.java
++ 3.5.3
+  + BinarySearchSET.java
++ 3.5.4
+  + HashSTint.java
+  + HashSTdouble.java

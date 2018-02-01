@@ -1,32 +1,32 @@
 import java.util.Iterator;
 
-public class HashST<Key, Value> {
+public class HashSTint<Value> {
     private int N = 0;
     private int M = 16;
-    private Key[] keys;
+    private Integer[] keys;
     private Value[] vals;
 
-    public HashST() {
-        keys = (Key[]) new Object[M];
+    public HashSTint() {
+        keys = new Integer[M];
         vals = (Value[]) new Object[M];
     }
 
-    public HashST(int cap) {
-        keys = (Key[]) new Object[cap];
+    public HashSTint(int cap) {
+        keys = new Integer[cap];
         vals = (Value[]) new Object[cap];
         M = cap;
     }
 
     public int size() { return N; }
     public boolean isEmpty() { return N == 0; }
-    
-    private int hash(Key key) {
+            
+    private int hash(Integer key) {
         return (key.hashCode() & 0x7fffffff) % M;
     }
 
     private void resize(int cap) {
-        HashST<Key, Value> t;
-        t = new HashST<Key, Value>(cap);
+        HashSTint<Value> t;
+        t = new HashSTint<Value>(cap);
         for (int i = 0; i < M; i++) {
             if (keys[i] != null && vals[i] != null) {
                 t.put(keys[i], vals[i]);
@@ -37,31 +37,31 @@ public class HashST<Key, Value> {
         M = t.M;
     }
 
-    public void put(Key key, Value val) {
+    public void put(Integer key, Value val) {
         // eager delete
         if (val == null) {
             delete(key);
             return;
         }
-		
+
         if (N >= M/2) resize(2*M);
 
         int i;
-        for (i = hash(key); keys[i] != null; i = (i+1) % M)
+        for (i = hash(key); keys[i] != null ; i = (i+1) % M)
             if (keys[i].equals(key)) { vals[i] = val; return; }
         keys[i] = key;
         vals[i] = val;
         N++;
     }
 
-    public Value get(Key key) {
+    public Value get(Integer key) {
         for (int i = hash(key); keys[i] != null; i = (i+1) % M)
             if (keys[i].equals(key) && vals[i] != null)
                 return vals[i];
         return null;
     }
 
-    public void delete(Key key) {
+    public void delete(Integer key) {
         if (get(key) == null) return;
         
         if (N > 0 && N <= M/4) resize(M/2);
@@ -78,8 +78,8 @@ public class HashST<Key, Value> {
         N--;
         
         // reinsert all elements in that cluster
-        for (int i = (position+1)%M; keys[i] != null; i = (i+1) % M) {
-            Key k = keys[i];
+        for (int i = (position+1) % M; keys[i] != null; i = (i+1) % M) {
+            int k = keys[i];
             Value v = vals[i];
             keys[i] = null;
             vals[i] = null;
@@ -90,17 +90,17 @@ public class HashST<Key, Value> {
             
         
     // Exercise 3.4.19
-    public Iterable<Key> keys() {
+    public Iterable<Integer> keys() {
         return new HashTableIterable();
     }
 
-    private class HashTableIterable implements Iterable<Key> {
-        public Iterator<Key> iterator() {
-            return new Iterator<Key>() {
+    private class HashTableIterable implements Iterable<Integer> {
+        public Iterator<Integer> iterator() {
+            return new Iterator<Integer>() {
                 private int i = 0;
                 private int count = 0;
                 public boolean hasNext() { return count < N; }
-                public Key next() {
+                public Integer next() {
                     while (keys[i] == null) {
                         i++;
                     }
@@ -109,6 +109,26 @@ public class HashST<Key, Value> {
                 }
             };
         }
-    } 
+    }
+
+    public static void main(String[] args) {
+        HashSTint<Integer> st = new HashSTint<Integer>();
+        
+        int[] ints = {1,2,4,5,7,3,4};
+        for (int i = 0; i < ints.length; i++) {
+            st.put(ints[i], i);
+        }
+        StdOut.println(st.size());
+        for (int i = 0; i < ints.length; i++) {
+            st.delete(ints[i]);
+        }
+
+        for (int x : st.keys()) {
+            StdOut.print(x + " ");
+        }
+        StdOut.println(st.size());
+    }
+                       
+            
 }
                       
