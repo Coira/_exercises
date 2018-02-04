@@ -13,3 +13,23 @@
 + 3.5.4
   + HashSTint.java
   + HashSTdouble.java
++ 3.5.5
+  + STint.java
+  + STdouble.java
+  + Queue.java
+  + SparseVector.java
++ 3.5.6
+  + HashSETint.java
+  + HashSETdouble.java
++ 3.5.12
+  + LookupCSV.java
+    + ST.java
++ 3.5.13
+  + RangeLookupCSV.java
+    + ST.java
++ 3.5.14
+  + Invert.java
+    + ST.java, Queue.java
+	+ Bag.java
+
+	

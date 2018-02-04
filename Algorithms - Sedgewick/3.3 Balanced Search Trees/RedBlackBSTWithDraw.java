@@ -88,12 +88,10 @@ public class RedBlackBSTWithDraw<Key extends Comparable<Key>, Value> {
     }
 
     private int height() {
-        System.out.println(root.key);
         Node curr = root;
         int h = 0;
         while (curr != null) {
             if (curr.colour == BLACK) {
-                System.out.print(curr.key + " ");
                 h++;
             }
             curr = curr.right;

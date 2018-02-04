@@ -69,6 +69,20 @@ public class ST<Key extends Comparable<Key>, Value> {
         root.colour = BLACK;
     }
 
+    public Value get(Key key) {
+        return get(root, key);
+    }
+
+    private Value get(Node x, Key key) {
+        while (x != null) {
+            int cmp = key.compareTo(x.key);
+            if (cmp < 0) x = x.left;
+            else if (cmp > 0) x = x.right;
+            else return x.val;
+        }
+        return null;
+    }
+
     private Node put(Node h, Key key, Value val) {
         if (h == null) // Do standard insert, with red link to parent
             return new Node(key, val, 1, RED);
@@ -87,12 +101,10 @@ public class ST<Key extends Comparable<Key>, Value> {
     }
 
     private int height() {
-        System.out.println(root.key);
         Node curr = root;
         int h = 0;
         while (curr != null) {
             if (curr.colour == BLACK) {
-                System.out.print(curr.key + " ");
                 h++;
             }
             curr = curr.right;
@@ -243,6 +255,21 @@ public class ST<Key extends Comparable<Key>, Value> {
         
         h.N = size(h.left) + size(h.right) + 1;
         return h;
+    }
+
+    public Iterable<Key> keys() {
+        Queue<Key> q = new Queue<Key>();
+        return keys(root, q);
+    }
+
+    private Iterable<Key> keys(Node n, Queue<Key> q) {
+        if (n == null) return q;
+        else {
+            keys(n.left, q);
+            q.enqueue(n.key);
+            keys(n.right, q);
+        }
+        return q;
     }
 }
         

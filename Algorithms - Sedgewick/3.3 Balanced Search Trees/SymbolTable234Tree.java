@@ -101,7 +101,6 @@ public class SymbolTable234Tree<Key extends Comparable<Key>, Value> {
         int h = 0;
         while (curr != null) {
             if (curr.colour == BLACK) {
-                System.out.print(curr.key + " ");
                 h++;
             }
             curr = curr.right;
